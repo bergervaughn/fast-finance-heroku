@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel
 from enum import Enum
 from typing import List
@@ -28,4 +30,8 @@ class NewUserRequest(BaseModel):
     email: str
     dob: str
 
-#class PastPasswords(BaseModel):
+class PastPasswords(BaseModel):
+    pass_id: str
+    user_id: str
+    hashed_pass: str
+    date_created: datetime

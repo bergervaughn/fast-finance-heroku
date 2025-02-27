@@ -1,9 +1,11 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
+
+import DummyDB
 from userinfo import User, Role, NewUserRequest
 from fastapi.middleware.cors import CORSMiddleware
-
+from DummyDB import db
 
 app = FastAPI()
 
@@ -17,25 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-db: List[User] = [
-    User(
-        id="testAdmin",
-        hashed_pass="temp",
-        # email is default for now so this test user can receive emails
-        role = Role.admin,
-        status=True,
-        first_name="Dave",
-        last_name="Administrator"
-    ),
-    User(
-        id="sampleAccountant",
-        hashed_pass="temp",
-        role=Role.accountant,
-        status=True,
-        first_name="John",
-        last_name="Accounting"
-    )
-]
+
 # adding a comment here
 
 class Request(BaseModel):
@@ -63,7 +47,7 @@ async def get_new_user_requests():
 async def login(login_info: User):
     """
     This takes a special type of user with only 2 variables. the JSON format looks like:
-    {"id": <user id string>, "hashed_password": <hashed password string>}
+    {"id": "user id string", "hashed_password": "hashed password string"}
 
     it will return a JSON with one field: "message", which includes the role of the user and " Login Successful", eg:
     {"message": "Accountant Login Successful"}
@@ -75,25 +59,25 @@ async def login(login_info: User):
     :param login_info:
     :return:
     """
-    return {"message": "Unfinished function"}
+    
     #database.checkOutdatedPasswords
     # the above line is to check every current password in the system if they are about to expire, and send an email if so.
     # this happens during every login request because at least one user logging in is a very frequent and consistent action
     #
-    #try:
-    #   User user = database.getUser(login_info.id)
-    #except (databaseError e):
-    #    return {"message": "Incorrect username"}
-    #
-    #if user.hashed_pass == login_info.hashed_pass:
-    #   if user.role == Role.admin:
-    #       return {"message": "Admin Login Successful"}
-    #   elif: user.role == Role.manager:
-    #       return {"message": "Accountant Login Successful"}
-    #   else:
-    #       return {"message": "Accountant Login Successful"}
-    #else:
-    #   return {"message": "Incorrect Password"}
+    try:
+      user = DummyDB.get_user(login_info.id)
+    except NameError as e:
+       raise HTTPException(404, detail={"Error": f"{e}"})
+
+    if user.hashed_pass == login_info.hashed_pass:
+      if user.role == Role.admin:
+          return {"message": "Admin Login Successful"}
+      elif user.role == Role.manager:
+          return {"message": "Accountant Login Successful"}
+      else:
+          return {"message": "Accountant Login Successful"}
+    else:
+      return {"message": "Incorrect Password"}
 
 @app.get("/users/'login/forgot_password")
 async def forgot_pass(login_info: User):
