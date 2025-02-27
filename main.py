@@ -156,3 +156,7 @@ async def update_user(user: User):
         status_code=404,
         detail=f"User with ID: {user.id} does not exist."
     )
+
+@app.delete("/users/new_user")
+async def delete_new_user_request(email: str):
+    pass
