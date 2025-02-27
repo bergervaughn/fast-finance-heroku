@@ -83,7 +83,7 @@ async def login(login_info: User):
         user.failed_attempts+=1
         return {"Error": "Incorrect Password"}
 
-@app.get("/users/'login/forgot_password")
+@app.get("/users/login/forgot_password")
 async def forgot_pass(login_info: User):
     """
     This also takes a special user JSON, this time with just their ID and their email in the following format:
