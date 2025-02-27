@@ -19,3 +19,8 @@ class User(BaseModel):
     first_name: str
     last_name: str
 
+class NewUserRequest(BaseModel):
+    first_name: str
+    last_name: str
+    email: str
+    dob: str
