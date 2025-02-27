@@ -1,11 +1,14 @@
+from calendar import month
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
+from datetime import date, timedelta
 
 import DummyDB
 from userinfo import User, Role, NewUserRequest
 from fastapi.middleware.cors import CORSMiddleware
-from DummyDB import db
+from DummyDB import user_table
 
 app = FastAPI()
 
@@ -33,7 +36,7 @@ async def root():
 #the primary way the app will get user data to display on the screen
 @app.get("/users")
 async def fetch_users():
-    return db
+    return user_table
 
 @app.get("users/new_user")
 async def get_new_user_requests():
@@ -59,25 +62,25 @@ async def login(login_info: User):
     :param login_info:
     :return:
     """
-    
-    #database.checkOutdatedPasswords
+
+    DummyDB.check_outdated_passwords()
     # the above line is to check every current password in the system if they are about to expire, and send an email if so.
     # this happens during every login request because at least one user logging in is a very frequent and consistent action
     #
-    try:
-      user = DummyDB.get_user(login_info.id)
-    except NameError as e:
-       raise HTTPException(404, detail={"Error": f"{e}"})
+
+    user = DummyDB.get_user(login_info.id) #raises an exception if user id not found
 
     if user.hashed_pass == login_info.hashed_pass:
-      if user.role == Role.admin:
-          return {"message": "Admin Login Successful"}
-      elif user.role == Role.manager:
-          return {"message": "Accountant Login Successful"}
-      else:
-          return {"message": "Accountant Login Successful"}
+        if not user.status:
+            raise HTTPException(401, detail={"Error": "Account Suspended"})
+        if user.role == Role.admin:
+            return {"message": "Admin Login Successful"}
+        elif user.role == Role.manager:
+            return {"message": "Accountant Login Successful"}
+        else:
+            return {"message": "Accountant Login Successful"}
     else:
-      return {"message": "Incorrect Password"}
+        raise HTTPException(401, detail={"Error": "Unauthorized"})
 
 @app.get("/users/'login/forgot_password")
 async def forgot_pass(login_info: User):
@@ -99,14 +102,15 @@ async def forgot_pass(login_info: User):
     :param login_info:
     :return:
     """
-    return {"message": "Unfinished function"}
-    #if login_info.id is None or login_info.
+    user = DummyDB.get_user(login_info.id)
+    
+    return {"security_question": user.security_question, "security_answer": user.security_answer}
 
 
 # The primary way the admin will add a user to the system.
 @app.post("/users")
 async def register_user(user: User):
-    db.append(user)
+    user_table.append(user)
     return {"id": user.id}
 #weird shit going on tonight
 
@@ -133,10 +137,14 @@ async def new_user(user: NewUserRequest):
 # this includes changing personal info about the user and activating or deactivating them
 @app.put("/users/update")
 async def update_user(user: User):
-    for u in db:
+    for u in user_table:
         if user.id == u.id:
             if user.hashed_pass is not None:
+                for old_pass in u.past_passwords:
+                    if user.hashed_pass == old_pass:
+                        raise HTTPException(405, {"Error": "New Password cannot be an old password."})
                 u.hashed_pass = user.hashed_pass
+                u.password_expiration = date.today() + timedelta(days=90)
             if user.email is not None:
                 u.email = user.email
             if user.status is not None:
