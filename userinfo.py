@@ -14,7 +14,7 @@ class Status(str, Enum):
 class User(BaseModel):
     id: str
     hashed_pass: str
-    past_passwords: List[PastPasswords]
+#    past_passwords: List[PastPasswords]
     email: str = "bergervaughn@gmail.com" # default is my email
     role: Role
     status: bool = True
@@ -28,4 +28,4 @@ class NewUserRequest(BaseModel):
     email: str
     dob: str
 
-class PastPasswords(BaseModel):
+#class PastPasswords(BaseModel):

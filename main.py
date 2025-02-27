@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
 from userinfo import User, Role, NewUserRequest
-from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 
