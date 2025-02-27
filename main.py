@@ -4,11 +4,11 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
 from datetime import date, timedelta
+
 import DummyDB
-import FFEmail
-from userinfo import User, Role, NewUserRequest, Email
+from userinfo import User, Role, NewUserRequest
 from fastapi.middleware.cors import CORSMiddleware
-from DummyDB import user_table, new_user_table
+from DummyDB import user_table
 
 app = FastAPI()
 
@@ -72,7 +72,7 @@ async def login(login_info: User):
 
     if user.hashed_pass == login_info.hashed_pass:
         if not user.status:
-            return {"Error": "Account Suspended"}
+            raise HTTPException(401, detail={"Error": "Account Suspended"})
         if user.role == Role.admin:
             return {"message": "Admin Login Successful"}
         elif user.role == Role.manager:
@@ -80,8 +80,7 @@ async def login(login_info: User):
         else:
             return {"message": "Accountant Login Successful"}
     else:
-        user.failed_attempts+=1
-        return {"Error": "Incorrect Password"}
+        raise HTTPException(401, detail={"Error": "Unauthorized"})
 
 @app.get("/users/login/forgot_password")
 async def forgot_pass(login_info: User):
@@ -104,8 +103,9 @@ async def forgot_pass(login_info: User):
     :return:
     """
     user = DummyDB.get_user(login_info.id)
-
+    
     return {"security_question": user.security_question, "security_answer": user.security_answer}
+
 
 # The primary way the admin will add a user to the system.
 @app.post("/users")
@@ -131,13 +131,7 @@ async def new_user(user: NewUserRequest):
     :param user:
     :return:
     """
-    new_user_table.append(user)
-    return {"email": user.email}
-
-@app.post("/email")
-async def send_email(email: Email):
-    result = FFEmail.send_email(email.recipient, email.subject, email.body)
-    return {"Message": result}
+    return {"Message": "Unfinished function"}
 
 # the primary way an admin will update user info.
 # this includes changing personal info about the user and activating or deactivating them
@@ -167,9 +161,4 @@ async def update_user(user: User):
 
 @app.delete("/users/new_user")
 async def delete_new_user_request(email: str):
-    for user in new_user_table:
-        if email == user:
-            new_user_table.remove(user)
-            return {"Message": "New User Request successfully deleted."}
-
-    raise HTTPException(404, "User not found.")
+    pass

@@ -22,9 +22,9 @@ class User(BaseModel):
     status: bool = True
     first_name: str
     last_name: str
-    dob: str = "01-01-1900"
+    dob: str = "1900-01-01"
     failed_attempts: int = 0
-    password_expiration: str = "01-05-2025"
+    password_expiration: str = "2025-05-1"
     security_question: str = "What is your mother's maiden name?"
     security_answer: str = "Jones"
 
@@ -33,12 +33,6 @@ class NewUserRequest(BaseModel):
     last_name: str
     email: str
     dob: str
-
-class Email(BaseModel):
-    recipient: str
-    subject: str
-    body: str
-
 
 # class PastPasswords(BaseModel):
 #     pass_id: str
