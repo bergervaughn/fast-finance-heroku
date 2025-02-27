@@ -47,6 +47,7 @@ async def get_new_user_requests():
     Returns the list of new user requests.
     :return:
     """
+    return {"message": "Unfinished function"}
 
 @app.get("/users/login")
 async def login(login_info: User):
@@ -64,7 +65,7 @@ async def login(login_info: User):
     :param login_info:
     :return:
     """
-    pass
+    return {"message": "Unfinished function"}
     #database.checkOutdatedPasswords
     # the above line is to check every current password in the system if they are about to expire, and send an email if so.
     # this happens during every login request because at least one user logging in is a very frequent and consistent action
@@ -104,7 +105,7 @@ async def forgot_pass(login_info: User):
     :param login_info:
     :return:
     """
-    pass
+    return {"message": "Unfinished function"}
     #if login_info.id is None or login_info.
 
 
@@ -132,6 +133,7 @@ async def new_user(user: NewUserRequest):
     :param user:
     :return:
     """
+    return {"Message": "Unfinished function"}
 
 # the primary way an admin will update user info.
 # this includes changing personal info about the user and activating or deactivating them
