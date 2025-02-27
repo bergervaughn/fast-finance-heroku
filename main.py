@@ -34,7 +34,7 @@ class Request(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"Greeting": "Hello team. I have successfully hosted my API through ngrok. I am on a roll tonight."}
+    return {"Greeting": "You have accessed the root of the FastFinance API."}
 
 #the primary way the app will get user data to display on the screen
 @app.get("/users")
