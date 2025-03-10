@@ -1,4 +1,6 @@
 from calendar import month
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -11,6 +13,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from DummyDB import user_table
 
 app = FastAPI()
+
+uri = "mongodb+srv://FastFinancesAdmin:fastfin13@fastfinances.p3wik.mongodb.net/?retryWrites=true&w=majority&appName=FastFinances"
 
 origins = ["*"]
 
@@ -31,7 +35,16 @@ class Request(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"Greeting": "You have accessed the root of the FastFinance API."}
+    client = MongoClient(uri, server_api=ServerApi('1'))
+
+    # Send a ping to confirm a successful connection
+    try:
+        client.admin.command('ping')
+        return "Pinged your deployment. You successfully connected to MongoDB!"
+    except Exception as e:
+        return e
+
+    #return {"Greeting": "You have accessed the root of the FastFinance API."}
 
 #the primary way the app will get user data to display on the screen
 @app.get("/users")
