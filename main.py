@@ -10,7 +10,7 @@ from datetime import date, timedelta
 import DummyDB
 from userinfo import User, Role, NewUserRequest
 from fastapi.middleware.cors import CORSMiddleware
-from DummyDB import user_table
+from DummyDB import user_table, new_user_table
 
 app = FastAPI()
 
@@ -57,7 +57,8 @@ async def get_new_user_requests():
     Returns the list of new user requests.
     :return:
     """
-    return {"message": "Unfinished function"}
+    return new_user_table
+
 
 @app.get("/users/login")
 async def login(login_info: User):
@@ -96,7 +97,7 @@ async def login(login_info: User):
         raise HTTPException(401, detail={"Error": "Unauthorized"})
 
 @app.get("/users/login/forgot_password")
-async def forgot_pass(login_info: User):
+async def forgot_pass(login_info: User, answer_list):
     """
     This also takes a special user JSON, this time with just their ID and their email in the following format:
     {"id": <user id string>, "email": <email string>}
@@ -112,6 +113,7 @@ async def forgot_pass(login_info: User):
     }
     It is expected that the web client will handle the logic. Once the answers have been verified, the client use the update_users()
     function defined by the path: /users/update with the "put" parameter
+    :param answer_list:
     :param login_info:
     :return:
     """
@@ -128,7 +130,7 @@ async def register_user(user: User):
 #weird shit going on tonight
 
 @app.post("users/new_user")
-async def new_user(user: NewUserRequest):
+async def new_user(user_req: NewUserRequest):
     """
     Function to create a "new user" request in the system.
     The format for a new user request JSON looks like:
@@ -141,10 +143,11 @@ async def new_user(user: NewUserRequest):
     Admins will see new user requests on their client.
     To create a new user in the database, use the post:"/users" api call.
 
-    :param user:
+    :param user_req:
     :return:
     """
-    return {"Message": "Unfinished function"}
+    new_user_table.append(user_req)
+    return {"email" : user_req.email}
 
 # the primary way an admin will update user info.
 # this includes changing personal info about the user and activating or deactivating them
@@ -172,6 +175,6 @@ async def update_user(user: User):
         detail=f"User with ID: {user.id} does not exist."
     )
 
-@app.delete("/users/new_user")
-async def delete_new_user_request(email: str):
-    pass
+# @app.delete("/users/new_user")
+# async def delete_new_user_request(email: str):
+#     pass
