@@ -1,20 +1,16 @@
 from calendar import month
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
 from datetime import date, timedelta
-
 import DummyDB
-from userinfo import User, Role, NewUserRequest
+import FFEmail
+from userinfo import User, Role, NewUserRequest, Email
 from fastapi.middleware.cors import CORSMiddleware
 from DummyDB import user_table, new_user_table
 
 app = FastAPI()
-
-uri = "mongodb+srv://FastFinancesAdmin:fastfin13@fastfinances.p3wik.mongodb.net/?retryWrites=true&w=majority&appName=FastFinances"
 
 origins = ["*"]
 
@@ -35,16 +31,7 @@ class Request(BaseModel):
 
 @app.get("/")
 async def root():
-    client = MongoClient(uri, server_api=ServerApi('1'))
-
-    # Send a ping to confirm a successful connection
-    try:
-        client.admin.command('ping')
-        return "Pinged your deployment. You successfully connected to MongoDB!"
-    except Exception as e:
-        return e
-
-    #return {"Greeting": "You have accessed the root of the FastFinance API."}
+    return {"Greeting": "You have accessed the root of the FastFinance API."}
 
 #the primary way the app will get user data to display on the screen
 @app.get("/users")
@@ -57,8 +44,7 @@ async def get_new_user_requests():
     Returns the list of new user requests.
     :return:
     """
-    return new_user_table
-
+    return {"message": "Unfinished function"}
 
 @app.get("/users/login")
 async def login(login_info: User):
@@ -86,7 +72,7 @@ async def login(login_info: User):
 
     if user.hashed_pass == login_info.hashed_pass:
         if not user.status:
-            raise HTTPException(401, detail={"Error": "Account Suspended"})
+            return {"Error": "Account Suspended"}
         if user.role == Role.admin:
             return {"message": "Admin Login Successful"}
         elif user.role == Role.manager:
@@ -94,10 +80,11 @@ async def login(login_info: User):
         else:
             return {"message": "Accountant Login Successful"}
     else:
-        raise HTTPException(401, detail={"Error": "Unauthorized"})
+        user.failed_attempts+=1
+        return {"Error": "Incorrect Password"}
 
-@app.get("/users/login/forgot_password")
-async def forgot_pass(login_info: User, answer_list):
+@app.get("/users/'login/forgot_password")
+async def forgot_pass(login_info: User):
     """
     This also takes a special user JSON, this time with just their ID and their email in the following format:
     {"id": <user id string>, "email": <email string>}
@@ -113,14 +100,12 @@ async def forgot_pass(login_info: User, answer_list):
     }
     It is expected that the web client will handle the logic. Once the answers have been verified, the client use the update_users()
     function defined by the path: /users/update with the "put" parameter
-    :param answer_list:
     :param login_info:
     :return:
     """
     user = DummyDB.get_user(login_info.id)
-    
-    return {"security_question": user.security_question, "security_answer": user.security_answer}
 
+    return {"security_question": user.security_question, "security_answer": user.security_answer}
 
 # The primary way the admin will add a user to the system.
 @app.post("/users")
@@ -130,7 +115,7 @@ async def register_user(user: User):
 #weird shit going on tonight
 
 @app.post("users/new_user")
-async def new_user(user_req: NewUserRequest):
+async def new_user(user: NewUserRequest):
     """
     Function to create a "new user" request in the system.
     The format for a new user request JSON looks like:
@@ -143,11 +128,16 @@ async def new_user(user_req: NewUserRequest):
     Admins will see new user requests on their client.
     To create a new user in the database, use the post:"/users" api call.
 
-    :param user_req:
+    :param user:
     :return:
     """
-    new_user_table.append(user_req)
-    return {"email" : user_req.email}
+    new_user_table.append(user)
+    return {"email": user.email}
+
+@app.post("/email")
+async def send_email(email: Email):
+    result = FFEmail.send_email(email.recipient, email.subject, email.body)
+    return {"Message": result}
 
 # the primary way an admin will update user info.
 # this includes changing personal info about the user and activating or deactivating them
@@ -175,6 +165,11 @@ async def update_user(user: User):
         detail=f"User with ID: {user.id} does not exist."
     )
 
-# @app.delete("/users/new_user")
-# async def delete_new_user_request(email: str):
-#     pass
+@app.delete("/users/new_user")
+async def delete_new_user_request(email: str):
+    for user in new_user_table:
+        if email == user:
+            new_user_table.remove(user)
+            return {"Message": "New User Request successfully deleted."}
+
+    raise HTTPException(404, "User not found.")
