@@ -79,7 +79,7 @@ async def login(login_info: User):
             return {"message": "Accountant Login Successful"}
     else:
         user.failed_attempts+=1
-        return {"Error": "Incorrect Password"}
+        return {"Error": "Incorrect Username or Password"}
 
 @app.get("/users/'login/forgot_password")
 async def forgot_pass(login_info: User):
