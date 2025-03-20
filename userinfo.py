@@ -9,9 +9,10 @@ class Role(str, Enum):
     manager = "manager"
     accountant = "accountant"
 
-class Status(str, Enum):
-    active = "active"
-    suspended = "suspended"
+#
+# class Status(str, Enum):
+#     active = "active"
+#     suspended = "suspended"
 
 class User(BaseModel):
     id: str

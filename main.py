@@ -78,7 +78,7 @@ async def login(login_info: User):
         else:
             return {"message": "Accountant Login Successful"}
     else:
-        user.failed_attempts+=1
+        user.failed_attempts += 1
         return {"Error": "Incorrect Username or Password"}
 
 @app.get("/users/'login/forgot_password")
@@ -163,11 +163,14 @@ async def update_user(user: User):
         detail=f"User with ID: {user.id} does not exist."
     )
 
-@app.delete("/users/new_user")
-async def delete_new_user_request(email: str):
-    for user in new_user_table:
-        if email == user:
-            new_user_table.remove(user)
-            return {"Message": "New User Request successfully deleted."}
 
-    raise HTTPException(404, "User not found.")
+#
+# @app.delete("/users/new_user")
+# async def delete_new_user_request(email: str):
+#     for user in new_user_table:
+#         if email == user:
+#             new_user_table.remove(user)
+#             return {"Message": "New User Request successfully deleted."}
+#
+#     raise HTTPException(404, "User not found.")
+
