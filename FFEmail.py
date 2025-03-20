@@ -42,7 +42,7 @@ def send_email(recipient, subject, message):
     :return: the result of sending the email
     """
 
-    if "" in recipient or subject == "" or message == "":
+    if recipient == "" or subject == "" or message == "":
         return "Error! Recipient, Subject, or Body of Email are empty."
 
     msg = EmailMessage()
