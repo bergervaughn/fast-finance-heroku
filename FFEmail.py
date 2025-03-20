@@ -48,11 +48,12 @@ def send_email(recipient, subject, message):
     msg = EmailMessage()
     msg['Subject'] = subject
     msg['From'] = from_email
-    if len(recipient) == 1:  # if the email has only one recipient
-        recipient = recipient[0]  # turns the list 'recipient' into a single string for later
-        msg['To'] = recipient
-    else:
-        msg['To'] = ",".join(recipient)
+    msg['To'] = recipient
+    # if len(recipient) == 1:  # if the email has only one recipient
+    #     recipient = recipient[0]  # turns the list 'recipient' into a single string for later
+    #     msg['To'] = recipient
+    # else:
+    #     msg['To'] = ",".join(recipient)
     msg.set_content(message)
 
     with smtplib.SMTP(HOST, PORT) as smtp:
