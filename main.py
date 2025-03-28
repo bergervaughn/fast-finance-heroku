@@ -1,14 +1,16 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from typing import List
 from datetime import date, timedelta
 import DummyDB
 import FFEmail
 from userinfo import User, Role, NewUserRequest, Email
 from fastapi.middleware.cors import CORSMiddleware
 from DummyDB import user_table, new_user_table
+import DatabaseAccess
 
 app = FastAPI()
+
+DBA = DatabaseAccess
 
 origins = ["*"]
 
@@ -34,7 +36,7 @@ async def root():
 #the primary way the app will get user data to display on the screen
 @app.get("/users")
 async def fetch_users():
-    return user_table
+    return DBA.get(DBA.db['Users'])
 
 @app.get("users/new_user")
 async def get_new_user_requests():
@@ -67,6 +69,9 @@ async def login(login_info: User):
     #
 
     user = DummyDB.get_user(login_info.id) #raises an exception if user id not found
+
+    if user.get("hashed_pass") is None:
+        return "404 error: user not found"
 
     if user.hashed_pass == login_info.hashed_pass:
         if not user.status:

@@ -5,6 +5,8 @@ from typing import List
 import FFEmail
 from userinfo import User, Role, NewUserRequest
 
+## Depreciated
+
 user_table: List[User] = [
     User(
         id="testAdmin",
@@ -33,7 +35,8 @@ def get_user(check_id: str):
     for u in user_table:
         if check_id == u.id:
             return u
-    raise HTTPException(404, detail={"Error": f"Used ID {check_id} not found"})
+    ## raise HTTPException(404, detail={"Error": f"Used ID {check_id} not found"})
+    return {"Error": f"Used ID {check_id} not found"}
 
 def check_outdated_passwords():
     pass
