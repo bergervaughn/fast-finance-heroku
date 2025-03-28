@@ -10,4 +10,4 @@ async def main_method():
 
     await task
 
-print(asyncio.run(main_method()))
+asyncio.run(main_method())

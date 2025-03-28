@@ -34,7 +34,13 @@ async def root():
 #the primary way the app will get user data to display on the screen
 @app.get("/users")
 async def fetch_users():
-    return DBA.get('Users')
+    var = DBA.get('Users')
+    rtn = []
+    for document in var:
+        print(document)
+        rtn.append(document)
+
+    return rtn
 
 @app.get("users/new_user")
 async def get_new_user_requests():
