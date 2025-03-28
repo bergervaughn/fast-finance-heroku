@@ -29,8 +29,8 @@ def get_one(collection, query):
 
 def get(collection):
     c = db[collection]
-    document = c.find()
-    return document
+    cursor = c.find()
+    return cursor.to_list()
 
 # #sample usage
 # collection = db['Accounts']

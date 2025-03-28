@@ -35,12 +35,8 @@ async def root():
 @app.get("/users")
 async def fetch_users():
     var = DBA.get('Users')
-    rtn = []
-    for document in var:
-        print(document)
-        rtn.append(document)
-
-    return rtn
+    print(var)
+    return var
 
 @app.get("users/new_user")
 async def get_new_user_requests():
