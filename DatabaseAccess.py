@@ -27,8 +27,9 @@ def get_one(collection, query):
 # document = get_one(collection, query)
 # print(document)
 
-def get(collection, query=None):
-    document = collection.find(query)
+def get(collection):
+    c = db[collection]
+    document = c.find()
     return document
 
 # #sample usage

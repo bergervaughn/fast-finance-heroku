@@ -6,11 +6,9 @@ import FFEmail
 from userinfo import User, Role, NewUserRequest, Email
 from fastapi.middleware.cors import CORSMiddleware
 from DummyDB import user_table, new_user_table
-import DatabaseAccess
+import DatabaseAccess as DBA
 
 app = FastAPI()
-
-DBA = DatabaseAccess
 
 origins = ["*"]
 
@@ -36,7 +34,7 @@ async def root():
 #the primary way the app will get user data to display on the screen
 @app.get("/users")
 async def fetch_users():
-    return DBA.get(DBA.db['Users'])
+    return DBA.get('Users')
 
 @app.get("users/new_user")
 async def get_new_user_requests():

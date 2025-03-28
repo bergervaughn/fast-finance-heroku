@@ -3,10 +3,11 @@ import json
 import asyncio
 
 async def main_method():
-    email = '{"recipient": "bergervaughn@gmail.com","subject": "API driver test","body": "This is a test of the API using my pycharm driver file"}'
+    # email = '{"recipient": "bergervaughn@gmail.com","subject": "API driver test","body": "This is a test of the API using my pycharm driver file"}'
 
-    task = asyncio.create_task(main.send_email(json.loads(email)))
+    # task = asyncio.create_task(main.send_email(json.loads(email)))
+    task = main.fetch_users()
 
     await task
 
-asyncio.run(main_method())
+print(asyncio.run(main_method()))
