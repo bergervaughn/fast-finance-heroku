@@ -116,7 +116,7 @@ async def forgot_pass(user_id : str, answers: List[str], hashed_pass : str):
 # The primary way the admin will add a user to the system.
 @app.post("/users")
 async def register_user(user: User):
-    user_table.append(user)
+    #user_table.append(user)
     return {"id": user.id}
 #weird shit going on tonight
 
