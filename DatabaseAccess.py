@@ -86,9 +86,8 @@ def update(collection, query, update, user_id):
 
 def insert(collection, document, user_id):
     collection = db[collection]
-    # if collection.find_one({'_id': document['_id']}):
-    #     #error('Attempted to insert a document when a document with an identical id exists')
-    #     return {"Error": "Attempted to insert a document when a document with an identical id exists"}
+    if type(document) is not dict:
+        return {"Error": "Not a dict"}
     collection.insert_one(document)
     event(None, document, user_id)
     return {"message" : "Document successfully inserted"}

@@ -113,9 +113,8 @@ async def forgot_pass(user_id : str):
 @app.post("/users")
 async def register_user(user: User, user_id : str):
     print(type(user))
-    return type(user)
-    #message = DBA.insert('Users', user, user_id)
-    #return message
+    message = DBA.insert('Users', user, user_id)
+    return message
 #weird shit going on tonight
 
 @app.post("/users/new_user")
