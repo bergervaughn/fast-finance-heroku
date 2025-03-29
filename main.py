@@ -40,7 +40,7 @@ async def fetch_users():
     var = DBA.get('Users')
     return var
 
-@app.get("users/new_user")
+@app.get("/users/new_user")
 async def get_new_user_requests():
     """
     Returns the list of new user requests.
@@ -116,7 +116,7 @@ async def register_user(user: User, user_id : str):
     return message
 #weird shit going on tonight
 
-@app.post("users/new_user")
+@app.post("/users/new_user")
 async def new_user(user: NewUserRequest):
     """
     Function to create a "new user" request in the system.

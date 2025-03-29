@@ -28,20 +28,39 @@ async def main_method():
     #     "suspension_start": "",
     #     "suspension_end": ""
     # }
-    # task = main.register_user(user, "VBerger2025")
+    user = {
+        "user_id": "JDoe1234",
+        "hashed_pass": "password",
+        "past_passwords": [],
+        "email": "bergervaughn@gmail.com",
+        "role": "accountant",
+        "status": True,
+        "first_name": "John",
+        "last_name": "Doe",
+        "profile_picture": 4,
+        "dob": "1980-05-17",
+        "failed_attempts": 0,
+        "password_expiration": "2025-04-05",
+        "security_answers": ["1","2","3"],
+        "suspension_start": "",
+        "suspension_end": ""
+    }
+    task = main.register_user(user, "VBerger2025")
+
+
 
     #task = main.update_user_attribute("WAfton1996", {"first_name":"William"}, "VBerger2025")
-    user_req = {
-        "email": "president@whitehouse.gov",
-        "first_name": "Barack",
-        "last_name": "Obama",
-        "dob" : "1961-08-04",
-        "hashed_pass" : "obamna",
-        "role" : "manager",
-        "security_answers" : ["1", "2", "3"]
-    }
-    #task = main.new_user(user_req)
-    task = main.delete_new_user_request("president@whitehouse.gov", "VBerger2025")
+    # user_req = {
+    #     "email": "president@whitehouse.gov",
+    #     "first_name": "Barack",
+    #     "last_name": "Obama",
+    #     "dob" : "1961-08-04",
+    #     "hashed_pass" : "obamna",
+    #     "role" : "manager",
+    #     "security_answers" : ["1", "2", "3"]
+    # }
+    # task = main.new_user(user_req)
+    #task = main.delete_new_user_request("president@whitehouse.gov", "VBerger2025")
 
     print(await task)
 
