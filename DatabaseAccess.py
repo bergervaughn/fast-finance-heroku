@@ -72,6 +72,7 @@ def event(original, updated, user_id):
 
 
 def update(collection, query, update, user_id):
+    collection = db[collection]
     original = collection.find_one(query)
     collection.update_one(query, update)
     updated = collection.find_one(query)
