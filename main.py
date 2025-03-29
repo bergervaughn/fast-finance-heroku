@@ -82,11 +82,11 @@ async def login(user_id : str, hashed_pass : str):
         if user['status'] is False:
             return {"Error": "Account Suspended"}
         if user['role'] == Role.admin:
-            return {"message": "Admin Login Successful"}
+            return {"message": "admin"}
         elif user['role'] == Role.manager:
-            return {"message": "Manager Login Successful"}
+            return {"message": "manager"}
         else:
-            return {"message": "Accountant Login Successful"}
+            return {"message": "accountant"}
     else:
         DBA.update('Users', {'user_id' : user['user_id']},{'$set': {'failed_attempts': failed_attempts + 1}}, "System Login")
         return {"Error": "Incorrect Username or Password"}
