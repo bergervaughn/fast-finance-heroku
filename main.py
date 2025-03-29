@@ -69,14 +69,14 @@ async def login(user_id : str, hashed_pass : str):
     # this happens during every login request because at least one user logging in is a very frequent and consistent action
 
     user = DBA.get_one('Users', {"user_id": user_id}) # user is a dict
+
     if user is None:
         return {"Error" : "Incorrect Username or Password"}
     failed_attempts = user['failed_attempts']
     if user['hashed_pass'] == hashed_pass:
         #if the failed attempts are greater than zero, reset it back to zero on a successful login. This is to avoid update log spam every time someone logs in
         if failed_attempts > 0:
-            DBA.update('Users', {'user_id': user['user_id']}, {'$set': {'failed_attempts': 0}},"System Login")
-
+            DBA.update('Users', {'user_id': user['user_id']}, {'failed_attempts': 0},"System Login")
 
         if user['status'] is False:
             return {"Error": "Account Suspended"}
@@ -87,7 +87,7 @@ async def login(user_id : str, hashed_pass : str):
         else:
             return {"message": "accountant"}
     else:
-        DBA.update('Users', {'user_id' : user['user_id']},{'$set': {'failed_attempts': failed_attempts + 1}}, "System Login")
+        DBA.update('Users', {'user_id' : user['user_id']},{'failed_attempts': failed_attempts + 1}, "System Login")
         return {"Error": "Incorrect Username or Password"}
 
 @app.get("/users/login/forgot_password")

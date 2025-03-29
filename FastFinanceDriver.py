@@ -9,7 +9,7 @@ async def main_method():
     # task = asyncio.create_task(main.send_email(json.loads(email)))
     #task = main.fetch_users()
     #task = main.forgot_pass("VBerger2025")
-    #task = main.login("user1234","hashed_password_example")
+    #task = main.login("VBerger2025","1Mn!")
 
     # user = {
     #     "user_id": "WAfton1996",
@@ -30,7 +30,7 @@ async def main_method():
     # }
     # task = main.register_user(user, "VBerger2025")
 
-    task = main.update_user_field("WAfton1996", {"first_name":"William"}, "VBerger2025")
+    #task = main.update_user_attribute("WAfton1996", {"first_name":"William"}, "VBerger2025")
     # user_req = {
     #     "first_name": "Barack",
     #     "last_name": "Obama",
