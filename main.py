@@ -110,15 +110,16 @@ async def forgot_pass(login_info: User):
     :param login_info:
     :return:
     """
-    user = DummyDB.get_user(login_info.id)
+    pass
+    #user = DummyDB.get_user(login_info.id)
 
-    return {"security_question": user.security_question, "security_answer": user.security_answer}
+    #return {"security_question": user.security_question, "security_answer": user.security_answer}
 
 # The primary way the admin will add a user to the system.
 @app.post("/users")
 async def register_user(user: User):
     user_table.append(user)
-    return {"id": user.id}
+    return {"id": user.user_id}
 #weird shit going on tonight
 
 @app.post("users/new_user")
@@ -151,7 +152,7 @@ async def send_email(email: Email):
 @app.put("/users/update")
 async def update_user(user: User):
     for u in user_table:
-        if user.id == u.id:
+        if user.user_id == u.id:
             if user.hashed_pass is not None:
                 for old_pass in u.past_passwords:
                     if user.hashed_pass == old_pass:
@@ -169,7 +170,7 @@ async def update_user(user: User):
             return {f"User with ID {user.id} updated successfully."}
     raise HTTPException(
         status_code=404,
-        detail=f"User with ID: {user.id} does not exist."
+        detail=f"User with ID: {user.user_id} does not exist."
     )
 
 
