@@ -91,27 +91,20 @@ async def login(user_id : str, hashed_pass : str):
         return {"Error": "Incorrect Username or Password"}
 
 @app.get("/users/'login/forgot_password")
-async def forgot_pass(user_id : str, answers: List[str], hashed_pass : str):
+async def forgot_pass(user_id : str):
     """
-    Takes 5 strings: the user ID, the three security answer strings, and the new password string.
-
-    If successful, it will update the system with the new password
-    If not, it will return one of a few errors, depending on whether the username or one of the security questions was wrong
+    Takes the ID of a user and returns a list with their 3 security passwords
 
     function defined by the path: /users/update with the "put" parameter
-    :param hashed_pass:
     :param user_id:
-    :param answers:
     :return:
     """
     user = DBA.get_one('Users', {"user_id": user_id})
+    if user is None:
+        return {"Error" : "User not found"}
+
     user_answers = user['security_answers']
-
-    if user_answers == answers:
-        DBA.update('Users', {'user_id': user['user_id']}, {'$set': {'hashed_pass' : hashed_pass}}, "System Password Update")
-        return {"Message" : "Password Updated Successfully"}
-
-    return {"Error": "Security question incorrect"}
+    return user_answers
 
 # The primary way the admin will add a user to the system.
 @app.post("/users")
