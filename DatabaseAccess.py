@@ -74,7 +74,7 @@ def event(original, updated, user_id):
 def update(collection, query, update, user_id):
     collection = db[collection]
     original = collection.find_one(query,{'_id': False})
-    collection.update_one(query, update)
+    collection.update_one(query, {'$set': update})
     updated = collection.find_one(query,{'_id': False})
     if original == updated:
         error('Attempted to change a document from a state to an identical state')
@@ -86,9 +86,9 @@ def update(collection, query, update, user_id):
 
 def insert(collection, document, user_id):
     collection = db[collection]
-    if collection.find_one({'_id': document['_id']}):
-        #error('Attempted to insert a document when a document with an identical id exists')
-        return {"Error": "Attempted to insert a document when a document with an identical id exists"}
+    # if collection.find_one({'_id': document['_id']}):
+    #     #error('Attempted to insert a document when a document with an identical id exists')
+    #     return {"Error": "Attempted to insert a document when a document with an identical id exists"}
     collection.insert_one(document)
     event(None, document, user_id)
     return {"message" : "Document successfully inserted"}
