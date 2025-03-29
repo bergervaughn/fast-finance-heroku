@@ -38,6 +38,7 @@ class NewUserRequest(BaseModel):
     dob: str
     hashed_pass: str
     role : Role
+    security_answers: List[str]
 
 class Email(BaseModel):
     recipient: str
