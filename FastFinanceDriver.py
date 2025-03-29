@@ -38,7 +38,7 @@ async def main_method():
     #     "dob" : "1961-08-04"
     # }
     # #task = main.new_user(user_req)
-    # task = main.delete_new_user_request("president@whitehouse.gov")
+    task = main.delete_new_user_request("president@whitehouse.gov")
 
     print(await task)
 
