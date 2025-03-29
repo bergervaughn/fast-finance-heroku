@@ -112,8 +112,10 @@ async def forgot_pass(user_id : str):
 # The primary way the admin will add a user to the system.
 @app.post("/users")
 async def register_user(user: User, user_id : str):
-    message = DBA.insert('Users', user, user_id)
-    return message
+    print(type(user))
+    return type(user)
+    #message = DBA.insert('Users', user, user_id)
+    #return message
 #weird shit going on tonight
 
 @app.post("/users/new_user")
