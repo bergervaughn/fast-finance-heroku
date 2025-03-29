@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from datetime import date, timedelta
 import DummyDB
 import FFEmail
+from typing import List
 from userinfo import User, Role, NewUserRequest, Email
 from fastapi.middleware.cors import CORSMiddleware
 from DummyDB import user_table, new_user_table
