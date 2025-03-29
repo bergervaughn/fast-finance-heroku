@@ -1,11 +1,12 @@
+from tkinter import *
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from datetime import date, timedelta
-import DummyDB
+from typing import List
 import FFEmail
 from userinfo import User, Role, NewUserRequest, Email
 from fastapi.middleware.cors import CORSMiddleware
-from DummyDB import user_table, new_user_table
+#from DummyDB import user_table, new_user_table
 import DatabaseAccess as DBA
 
 app = FastAPI()
@@ -91,33 +92,31 @@ async def login(user_id : str, hashed_pass : str):
         return {"Error": "Incorrect Username or Password"}
 
 @app.get("/users/'login/forgot_password")
-async def forgot_pass(login_info: User):
+async def forgot_pass(user_id : str, answers: List[str], hashed_pass : str):
     """
-    This also takes a special user JSON, this time with just their ID and their email in the following format:
-    {"id": <user id string>, "email": <email string>}
+    Takes 5 strings: the user ID, the three security answer strings, and the new password string.
 
-    if successful, it will return the user's security questions in the following json:
-    {
-        "security_question_1": <security question 1 string>,
-        "security_question_2": <security question 2 string>,
-        "security_question_3": <security question 3 string>,
-        "security_answer_1": <security answer 1 string>,
-        "security_answer_2": <security answer 2 string>,
-        "security_answer_3": <security answer 3 string>,
-    }
-    It is expected that the web client will handle the logic. Once the answers have been verified, the client use the update_users()
+    If successful, it will update the system with the new password
+    If not, it will return one of a few errors, depending on whether the username or one of the security questions was wrong
+
     function defined by the path: /users/update with the "put" parameter
-    :param login_info:
+    :param hashed_pass:
+    :param user_id:
+    :param answers:
     :return:
     """
-    user = DummyDB.get_user(login_info.id)
+    user = DBA.get_one('Users', {"user_id": user_id})
+    user_answers = user['security_answers']
 
-    return {"security_question": user.security_question, "security_answer": user.security_answer}
+    if user_answers == answers:
+        DBA.update('Users', {'user_id': user['user_id']}, {'$set': {'hashed_pass' : hashed_pass}}, "System Password Update")
+
+    pass
 
 # The primary way the admin will add a user to the system.
 @app.post("/users")
 async def register_user(user: User):
-    user_table.append(user)
+    #user_table.append(user)
     return {"id": user.id}
 #weird shit going on tonight
 
@@ -138,7 +137,7 @@ async def new_user(user: NewUserRequest):
     :param user:
     :return:
     """
-    new_user_table.append(user)
+    #new_user_table.append(user)
     return {"email": user.email}
 
 @app.post("/email")
@@ -150,6 +149,7 @@ async def send_email(email: Email):
 # this includes changing personal info about the user and activating or deactivating them
 @app.put("/users/update")
 async def update_user(user: User):
+    user_table = [] # TEMP bc dummy db causing weird errors
     for u in user_table:
         if user.id == u.id:
             if user.hashed_pass is not None:
