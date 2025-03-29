@@ -31,14 +31,16 @@ async def main_method():
     # task = main.register_user(user, "VBerger2025")
 
     #task = main.update_user_attribute("WAfton1996", {"first_name":"William"}, "VBerger2025")
-    # user_req = {
-    #     "first_name": "Barack",
-    #     "last_name": "Obama",
-    #     "email": "president@whitehouse.gov",
-    #     "dob" : "1961-08-04"
-    # }
-    # #task = main.new_user(user_req)
-    task = main.delete_new_user_request("president@whitehouse.gov")
+    user_req = {
+        "email": "president@whitehouse.gov",
+        "first_name": "Barack",
+        "last_name": "Obama",
+        "dob" : "1961-08-04",
+        "hashed_pass" : "obamna",
+        "role" : "manager"
+    }
+    #task = main.new_user(user_req)
+    task = main.delete_new_user_request("steelman@gmail.com", "VBerger2025")
 
     print(await task)
 

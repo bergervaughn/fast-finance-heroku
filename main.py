@@ -44,7 +44,8 @@ async def get_new_user_requests():
     Returns the list of new user requests.
     :return:
     """
-    return {"message": "Unfinished function"}
+
+    return DBA.get('User_Requests')
 
 @app.get("/users/login")
 async def login(user_id : str, hashed_pass : str):
@@ -187,8 +188,8 @@ async def update_user_attribute (user_id: str, change: dict, admin_id : str):
 
 
 @app.delete("/users/new_user")
-async def delete_new_user_request(email: str):
-    DBA.delete('User_Requests',{"email": email})
+async def delete_new_user_request(email: str, user_id : str):
+    DBA.delete('User_Requests',{"email": email}, user_id)
     doc = DBA.get_one('User_Requests', {"email": email})
     if doc is None:
         return {"message": f"Successfully deleted the user request with email {email}"}

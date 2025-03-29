@@ -32,10 +32,12 @@ class User(BaseModel):
     suspension_end : str = ""
 
 class NewUserRequest(BaseModel):
+    email: str
     first_name: str
     last_name: str
-    email: str
     dob: str
+    hashed_pass: str
+    role : Role
 
 class Email(BaseModel):
     recipient: str

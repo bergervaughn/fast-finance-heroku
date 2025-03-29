@@ -93,10 +93,11 @@ def insert(collection, document, user_id):
     event(None, document, user_id)
     return {"message" : "Document successfully inserted"}
 
-def delete(collection, query):
-    print(get_one(collection, query))
+def delete(collection, query, user_id):
+    deleted = get_one(collection, query)
     collection = db[collection]
     collection.delete_one(query)
+    event(deleted, None, user_id)
 
 # #sample usage THIS MUST FIT FORMAT OF WHERE YOU ARE INSERTING
 # test_doc = {
