@@ -9,7 +9,9 @@ async def main_method():
 
     # task = asyncio.create_task(main.send_email(json.loads(email)))
 
-    task = main.login("user1234","hashed_password_example")
+    #task = main.login("user1234","hashed_password_example")
+
+    task = main.root()
 
     print(await task)
 
