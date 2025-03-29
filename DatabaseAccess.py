@@ -18,6 +18,7 @@ except Exception as e:
 db = client['FastFinances']
 
 def get_one(collection, query):
+    collection = db[collection]
     document = collection.find_one(query)
     return document
 
@@ -28,8 +29,8 @@ def get_one(collection, query):
 # print(document)
 
 def get(collection):
-    c = db[collection]
-    cursor = c.find()
+    collection = db[collection]
+    cursor = collection.find()
     return cursor.to_list()
 
 # #sample usage

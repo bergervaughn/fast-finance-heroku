@@ -23,13 +23,13 @@ class User(BaseModel):
     status: bool = True
     first_name: str
     last_name: str
-    profile_picture : int
+    profile_picture : int = 0
     dob: str = "1900-01-01"
     failed_attempts: int = 0
     password_expiration: str = "2025-01-05"
     security_answers: List[str] = []
-    suspension_start : str
-    suspension_end : str
+    suspension_start : str = ""
+    suspension_end : str = ""
 
 class NewUserRequest(BaseModel):
     first_name: str
