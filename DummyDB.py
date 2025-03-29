@@ -9,7 +9,7 @@ from userinfo import User, Role, NewUserRequest
 
 user_table: List[User] = [
     User(
-        id="testAdmin",
+        user_id="testAdmin",
         hashed_pass="temp",
         # email is default for now so this test user can receive emails
         role = Role.admin,
@@ -18,7 +18,7 @@ user_table: List[User] = [
         last_name="Administrator"
     ),
     User(
-        id="sampleAccountant",
+        user_id="sampleAccountant",
         hashed_pass="temp",
         role=Role.accountant,
         status=True,
