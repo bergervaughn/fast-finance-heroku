@@ -36,7 +36,6 @@ async def root():
 @app.get("/users")
 async def fetch_users():
     var = DBA.get('Users')
-    print(var)
     return var
 
 @app.get("users/new_user")
