@@ -37,10 +37,11 @@ async def main_method():
         "last_name": "Obama",
         "dob" : "1961-08-04",
         "hashed_pass" : "obamna",
-        "role" : "manager"
+        "role" : "manager",
+        "security_answers" : ["1", "2", "3"]
     }
     #task = main.new_user(user_req)
-    task = main.delete_new_user_request("steelman@gmail.com", "VBerger2025")
+    task = main.delete_new_user_request("president@whitehouse.gov", "VBerger2025")
 
     print(await task)
 

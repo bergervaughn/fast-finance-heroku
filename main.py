@@ -1,3 +1,5 @@
+from asyncio import eager_task_factory
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from datetime import date, timedelta
@@ -189,6 +191,10 @@ async def update_user_attribute (user_id: str, change: dict, admin_id : str):
 
 @app.delete("/users/new_user")
 async def delete_new_user_request(email: str, user_id : str):
+    doc = DBA.get_one('User_Requests', {"email": email})
+    if doc is None:
+        return {"Error": f"User request with email {email} not found."}
+
     DBA.delete('User_Requests',{"email": email}, user_id)
     doc = DBA.get_one('User_Requests', {"email": email})
     if doc is None:
