@@ -166,8 +166,8 @@ async def update_user(user: User, user_id: str):
     return DBA.get_one('Users', {"user_id": user['user_id']})
 
 
-@app.put("/users/update_one_field")
-async def update_user_field (user_id: str, change: dict, admin_id : str):
+@app.put("/users/update_one")
+async def update_user_attribute (user_id: str, change: dict, admin_id : str):
     """
     Like update, but instead of taking the entire user object, it only takes the user_id of the user to change
     and the single field to be changed. Takes the ID of the admin making the change as usual.
