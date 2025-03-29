@@ -15,7 +15,7 @@ class Role(str, Enum):
 #     suspended = "suspended"
 
 class User(BaseModel):
-    id: str
+    user_id: str
     hashed_pass: str
     past_passwords: List[str] = []
     email: str = "bergervaughn@gmail.com" # default is my email
@@ -23,11 +23,13 @@ class User(BaseModel):
     status: bool = True
     first_name: str
     last_name: str
-    dob: str = "01-01-1900"
+    profile_picture : int = 0
+    dob: str = "1900-01-01"
     failed_attempts: int = 0
-    password_expiration: str = "01-05-2025"
-    security_question: str = "What is your mother's maiden name?"
-    security_answer: str = "Jones"
+    password_expiration: str = "2025-01-05"
+    security_answers: List[str] = []
+    suspension_start : str = ""
+    suspension_end : str = ""
 
 class NewUserRequest(BaseModel):
     first_name: str
