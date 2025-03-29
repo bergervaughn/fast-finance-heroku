@@ -1,4 +1,4 @@
-from tkinter import Listbox
+from tkinter import *
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from datetime import date, timedelta
@@ -51,7 +51,7 @@ async def get_new_user_requests():
 async def login(user_id : str, hashed_pass : str):
     """
 
-    Takes a username string and hashed_password string and attempts to login.
+    Takes a username string and hashed_password string and attempts to log in.
 
     it will return a JSON with one field: "message", which includes the role of the user and " Login Successful", eg:
     {"message": "Accountant Login Successful"}
