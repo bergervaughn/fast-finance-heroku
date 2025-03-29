@@ -142,40 +142,54 @@ async def send_email(email: Email):
 # this includes changing personal info about the user and activating or deactivating them
 @app.put("/users/update")
 async def update_user(user: User, user_id: str):
+    """
+    Takes in an entire user document and the id of the admin making the change.
+
+    The user document must include every field, including the ones that are not changed. It simply replaces
+    the document in the database with the new one being passed in. This allows multiple changes to happen with
+    one update call.
+
+    If the user is not found, it returns and error.
+    If it is successful, it gets the changed document from the database and returns it.
+
+    :param user:
+    :param user_id:
+    :return:
+    """
+
+    if DBA.get_one('Users', {"user_id": user['user_id']}) is None:
+        return {"Error": f"User ID {user['user_id']} not found."}
+
     DBA.update('Users', {'user_id' : user['user_id']}, user, "System Login")
-    print("Current Document: ")
-    print(DBA.get_one('Users', {"user_id": user['user_id']}))
-
-    # for u in user_table:
-    #     if user.user_id == u.id:
-    #         if user.hashed_pass is not None:
-    #             for old_pass in u.past_passwords:
-    #                 if user.hashed_pass == old_pass:
-    #                     raise HTTPException(405, {"Error": "New Password cannot be an old password."})
-    #             u.hashed_pass = user.hashed_pass
-    #             u.password_expiration = date.today() + timedelta(days=90)
-    #         if user.email is not None:
-    #             u.email = user.email
-    #         if user.status is not None:
-    #             u.status = user.status
-    #         if user.first_name is not None:
-    #             u.first_name = user.first_name
-    #         if user.last_name is not None:
-    #             u.last_name = user.last_name
-    #         return {f"User with ID {user.id} updated successfully."}
-    # raise HTTPException(
-    #     status_code=404,
-    #     detail=f"User with ID: {user.user_id} does not exist."
-    # )
+    #print("Current Document: ")
+    #print(DBA.get_one('Users', {"user_id": user['user_id']}))
+    return DBA.get_one('Users', {"user_id": user['user_id']})
 
 
-#
-# @app.delete("/users/new_user")
-# async def delete_new_user_request(email: str):
-#     for user in new_user_table:
-#         if email == user:
-#             new_user_table.remove(user)
-#             return {"Message": "New User Request successfully deleted."}
-#
-#     raise HTTPException(404, "User not found.")
+@app.put("/users/update_one_field")
+async def update_user_field (user_id: str, change: dict, admin_id : str):
+    """
+    Like update, but instead of taking the entire user object, it only takes the user_id of the user to change
+    and the single field to be changed. Takes the ID of the admin making the change as usual.
 
+    :param user_id:
+    :param change:
+    :param admin_id:
+    :return:
+    """
+
+    if DBA.get_one('Users', {"user_id": user_id}) is None:
+        return {"Error": "User ID not found."}
+
+    DBA.update('Users', {'user_id' : user_id}, change, admin_id)
+
+    return DBA.get_one('Users', {"user_id": user_id})
+
+
+@app.delete("/users/new_user")
+async def delete_new_user_request(email: str):
+    DBA.delete('User_Requests',{"email": email})
+    doc = DBA.get_one('User_Requests', {"email": email})
+    if doc is None:
+        return {"message": f"Successfully deleted the user request with email {email}"}
+    return {"Error": f"Could not find user request with email {email}"}
