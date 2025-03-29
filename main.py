@@ -90,7 +90,7 @@ async def login(user_id : str, hashed_pass : str):
         DBA.update('Users', {'user_id' : user['user_id']},{'$set': {'failed_attempts': failed_attempts + 1}}, "System Login")
         return {"Error": "Incorrect Username or Password"}
 
-@app.get("/users/'login/forgot_password")
+@app.get("/users/login/forgot_password")
 async def forgot_pass(user_id : str):
     """
     Takes the ID of a user and returns a list with their 3 security passwords
