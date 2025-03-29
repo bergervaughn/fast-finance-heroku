@@ -6,7 +6,7 @@ from typing import List
 import FFEmail
 from userinfo import User, Role, NewUserRequest, Email
 from fastapi.middleware.cors import CORSMiddleware
-from DummyDB import user_table, new_user_table
+#from DummyDB import user_table, new_user_table
 import DatabaseAccess as DBA
 
 app = FastAPI()
@@ -137,7 +137,7 @@ async def new_user(user: NewUserRequest):
     :param user:
     :return:
     """
-    new_user_table.append(user)
+    #new_user_table.append(user)
     return {"email": user.email}
 
 @app.post("/email")
@@ -149,6 +149,7 @@ async def send_email(email: Email):
 # this includes changing personal info about the user and activating or deactivating them
 @app.put("/users/update")
 async def update_user(user: User):
+    user_table = [] # TEMP bc dummy db causing weird errors
     for u in user_table:
         if user.id == u.id:
             if user.hashed_pass is not None:
