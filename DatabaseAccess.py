@@ -19,7 +19,7 @@ db = client['FastFinances']
 
 def get_one(collection, query):
     collection = db[collection]
-    document = collection.find_one(query)
+    document = collection.find_one(query, {'_id': False})
     return document
 
 # #sample usage
@@ -30,7 +30,7 @@ def get_one(collection, query):
 
 def get(collection):
     collection = db[collection]
-    cursor = collection.find()
+    cursor = collection.find({},{'_id': False})
     return cursor.to_list()
 
 # #sample usage
@@ -73,9 +73,9 @@ def event(original, updated, user_id):
 
 def update(collection, query, update, user_id):
     collection = db[collection]
-    original = collection.find_one(query)
+    original = collection.find_one(query,{'_id': False})
     collection.update_one(query, update)
-    updated = collection.find_one(query)
+    updated = collection.find_one(query,{'_id': False})
     if original == updated:
         error('Attempted to change a document from a state to an identical state')
         return
