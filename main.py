@@ -47,10 +47,10 @@ async def get_new_user_requests():
     return {"message": "Unfinished function"}
 
 @app.get("/users/login")
-async def login(login_info: User):
+async def login(user_id : str, hashed_pass : str):
     """
-    This takes a special type of user with only 2 variables. the JSON format looks like:
-    {"id": "user id string", "hashed_password": "hashed password string"}
+
+    Takes a username string and hashed_password string and attempts to log in.
 
     it will return a JSON with one field: "message", which includes the role of the user and " Login Successful", eg:
     {"message": "Accountant Login Successful"}
@@ -59,31 +59,35 @@ async def login(login_info: User):
 
     depending on the user's role.
 
-    :param login_info:
+    :param user_id:
+    :param hashed_pass:
     :return:
     """
 
-    DummyDB.check_outdated_passwords()
+    #DummyDB.check_outdated_passwords()
     # the above line is to check every current password in the system if they are about to expire, and send an email if so.
     # this happens during every login request because at least one user logging in is a very frequent and consistent action
-    #
 
-    user = DummyDB.get_user(login_info.id) #raises an exception if user id not found
+    user = DBA.get_one('Users', {"user_id": user_id}) # user is a dict
+    if user is None:
+        return {"Error" : "Incorrect Username or Password"}
+    failed_attempts = user['failed_attempts']
+    if user['hashed_pass'] == hashed_pass:
+        #if the failed attempts are greater than zero, reset it back to zero on a successful login. This is to avoid update log spam every time someone logs in
+        if failed_attempts > 0:
+            DBA.update('Users', {'user_id': user['user_id']}, {'$set': {'failed_attempts': 0}},"System Login")
 
-    if user.get("hashed_pass") is None:
-        return "404 error: user not found"
 
-    if user.hashed_pass == login_info.hashed_pass:
-        if not user.status:
+        if user['status'] is False:
             return {"Error": "Account Suspended"}
-        if user.role == Role.admin:
+        if user['role'] == Role.admin:
             return {"message": "Admin Login Successful"}
-        elif user.role == Role.manager:
-            return {"message": "Accountant Login Successful"}
+        elif user['role'] == Role.manager:
+            return {"message": "Manager Login Successful"}
         else:
             return {"message": "Accountant Login Successful"}
     else:
-        user.failed_attempts += 1
+        DBA.update('Users', {'user_id' : user['user_id']},{'$set': {'failed_attempts': failed_attempts + 1}}, "System Login")
         return {"Error": "Incorrect Username or Password"}
 
 @app.get("/users/'login/forgot_password")
