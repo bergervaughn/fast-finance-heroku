@@ -50,7 +50,7 @@ async def main_method():
 
     #DatabaseAccess.remove_id_recursive()
     #DatabaseAccess.remove_referenced_object_ids()
-    DatabaseAccess.check_outdated_passwords()
+    #DatabaseAccess.check_outdated_passwords()
     task = main.get_expired_passwords()
 
     #task = main.update_user_attribute("WAfton1996", {"first_name":"William"}, "VBerger2025")
