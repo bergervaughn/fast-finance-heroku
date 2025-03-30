@@ -174,6 +174,9 @@ async def update_user(user: User, user_id: str):
     if DBA.get_one('Users', {"user_id": user['user_id']}) is None:
         return {"Error": f"User ID {user['user_id']} not found."}
 
+    if type(user) is not dict:
+        user = user.model_dump()
+
     DBA.update('Users', {'user_id' : user['user_id']}, user, "System Login")
     #print("Current Document: ")
     #print(DBA.get_one('Users', {"user_id": user['user_id']}))
@@ -215,5 +218,35 @@ async def get_accounts():
     return DBA.get('Accounts')
 
 @app.post("/accounts")
-async def create_account(account : FinancialAccount, user_id: str):
-    pass
+async def create_account(account : Account, user_id: str):
+    if type(account) is not dict:
+        account = account.model_dump()
+    message = DBA.insert('Accounts', account, user_id)
+    return message
+
+@app.put("/accounts/update_one")
+async def update_account_attribute(account_id : int, change: dict, admin_id: str):
+    if DBA.get_one('Accounts', {"account_id": account_id}) is None:
+        return {"Error" : "Account ID not found"}
+
+    DBA.update('Accounts', {"account_id": account_id}, change, admin_id)
+
+@app.put("/accounts/update")
+async def update_account(account : Account, user_id :str):
+    if type(account) is not dict:
+        account = account.model_dump()
+
+    account_id = account['account_id']
+    if DBA.get_one('Accounts', {"account_id": account_id}) is None:
+        return {"Error": "Account ID not found."}
+
+    DBA.update('Accounts', {'account_id': account_id}, account, user_id)
+    # print("Current Document: ")
+    # print(DBA.get_one('Users', {"user_id": user['user_id']}))
+    return DBA.get_one('Accounts', {"account_id": account_id})
+
+
+@app.get("/events")
+async def get_event_log():
+    return DBA.get('Events')
+

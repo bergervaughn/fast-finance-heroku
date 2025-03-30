@@ -7,11 +7,11 @@ class NormalSide(str, Enum):
     credit = "credit"
 
 class Statement(str, Enum):
-    BS = "BS"
-    IS = "IS"
-    RE = "RE"
+    BS = "BS"  # balance sheet
+    IS = "IS"  # income statement
+    RE = "RE"  # retained earnings
 
-class FinancialAccount(BaseModel):
+class Account(BaseModel):
     account_id: int
     account_name : str
     description : str = ""
@@ -24,3 +24,4 @@ class FinancialAccount(BaseModel):
     balance : int = 0
     statement : Statement
     comment: str = ""
+    status: bool = True
