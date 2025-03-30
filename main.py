@@ -171,6 +171,9 @@ async def update_user(user: User, user_id: str):
     :return:
     """
 
+    if type(user) is not dict:
+        user = user.model_dump()
+
     if DBA.get_one('Users', {"user_id": user['user_id']}) is None:
         return {"Error": f"User ID {user['user_id']} not found."}
 
