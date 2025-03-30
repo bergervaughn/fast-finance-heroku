@@ -135,6 +135,8 @@ async def new_user(user: NewUserRequest):
     :param user:
     :return:
     """
+    if type(user) is not dict:
+        user = user.model_dump()
     message = DBA.insert('User_Requests',user, "System User Request")
     return message
 
