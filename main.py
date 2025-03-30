@@ -113,7 +113,7 @@ async def forgot_pass(user_id : str):
 @app.post("/users")
 async def register_user(user: User, user_id : str):
     if type(user) is not dict:
-        return type(user)
+        return str(type(user))
     message = DBA.insert('Users', user, user_id)
     return message
 #weird shit going on tonight
