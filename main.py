@@ -75,7 +75,7 @@ async def login(user_id : str, hashed_pass : str):
     :return:
     """
 
-    #DummyDB.check_outdated_passwords()
+    DBA.check_outdated_passwords()
     # the above line is to check every current password in the system if they are about to expire, and send an email if so.
     # this happens during every login request because at least one user logging in is a very frequent and consistent action
 
@@ -119,7 +119,7 @@ async def forgot_pass(user_id : str):
 
 @app.get("users/login/expired_passwords")
 async def get_expired_passwords():
-    pass
+    return DBA.get('Expired_Passwords')
 
 @app.post("/users")
 async def register_user(user: User, user_id : str):

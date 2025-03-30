@@ -49,8 +49,9 @@ async def main_method():
     # task = main.register_user(user, "VBerger2025")
 
     #DatabaseAccess.remove_id_recursive()
-    task = main.get_event_log()
-
+    #DatabaseAccess.remove_referenced_object_ids()
+    DatabaseAccess.check_outdated_passwords()
+    task = main.get_expired_passwords()
 
     #task = main.update_user_attribute("WAfton1996", {"first_name":"William"}, "VBerger2025")
     # user_req = {
