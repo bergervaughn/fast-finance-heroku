@@ -18,7 +18,7 @@ class User(BaseModel):
     user_id: str
     hashed_pass: str
     past_passwords: List[str] = []
-    email: str = "bergervaughn@gmail.com" # default is my email
+    email: str
     role: Role
     status: bool = True
     first_name: str

@@ -31,6 +31,7 @@ def get_one(collection, query):
 def get(collection):
     collection = db[collection]
     cursor = collection.find({},{'_id': False})
+    cursor = remove_id_recursive(cursor)
     return cursor.to_list()
 
 # #sample usage
@@ -95,6 +96,15 @@ def delete(collection, query, user_id):
     collection = db[collection]
     collection.delete_one(query)
     event(deleted, None, user_id)
+
+def remove_id_recursive(doc):
+    if isinstance(doc, dict):
+        doc.pop("_id", None)  # Remove _id field
+        for key, value in doc.items():
+            doc[key] = remove_id_recursive(value)  # Recursively process nested structures
+    elif isinstance(doc, list):
+        return [remove_id_recursive(item) for item in doc]
+    return doc
 
 # #sample usage THIS MUST FIT FORMAT OF WHERE YOU ARE INSERTING
 # test_doc = {
