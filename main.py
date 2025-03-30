@@ -3,12 +3,12 @@ from asyncio import eager_task_factory
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from datetime import date, timedelta
-import DummyDB
+#import DummyDB
 import FFEmail
 from typing import List
 from userinfo import User, Role, NewUserRequest, Email
 from fastapi.middleware.cors import CORSMiddleware
-from DummyDB import user_table, new_user_table
+#from DummyDB import user_table, new_user_table
 import DatabaseAccess as DBA
 
 app = FastAPI()
@@ -135,6 +135,9 @@ async def new_user(user: NewUserRequest):
     :param user:
     :return:
     """
+    if DBA.get_one('User_Requests', {"email": user.email}) is not None:
+        return {"Error": "User request already exists in system."}
+
     if type(user) is not dict:
         user = user.model_dump()
     message = DBA.insert('User_Requests',user, "System User Request")
