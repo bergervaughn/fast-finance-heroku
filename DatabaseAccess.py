@@ -31,7 +31,6 @@ def get_one(collection, query):
 def get(collection):
     collection = db[collection]
     cursor = collection.find({},{'_id': False})
-    cursor = remove_id_recursive(cursor)
     return cursor.to_list()
 
 # #sample usage
@@ -40,13 +39,13 @@ def get(collection):
 # document = get(collection, query)
 # print(document)
 
-def error(error_description):
+def error(error_id : int, error_description : str):
     collection = db['Errors']
     now = datetime.now()
     error_date = now.strftime("%Y-%m-%d")
     error_time = now.strftime("%H:%M:%S")
     error_doc = {
-        'error_id' : ObjectId(),
+        'error_id' : error_id,
         "error_description": error_description,
         "date": error_date,
         "time": error_time
@@ -61,7 +60,7 @@ def event(original, updated, user_id):
     event_date = now.strftime("%Y-%m-%d")
     event_time = now.strftime("%H:%M:%S")
     event_doc = {
-        'event_id' : ObjectId(),
+        'event_id' : str(ObjectId()),
         'from' : original,
         'to' : updated,
         "user_id": user_id,
@@ -97,14 +96,15 @@ def delete(collection, query, user_id):
     collection.delete_one(query)
     event(deleted, None, user_id)
 
-def remove_id_recursive(doc):
-    if isinstance(doc, dict):
-        doc.pop("_id", None)  # Remove _id field
-        for key, value in doc.items():
-            doc[key] = remove_id_recursive(value)  # Recursively process nested structures
-    elif isinstance(doc, list):
-        return [remove_id_recursive(item) for item in doc]
-    return doc
+def remove_id_recursive():
+    collection = db['Events']
+    result = collection.update_many(
+        {"event_id": {"$type": "objectId"}},  # Filter to find documents with event_id as ObjectId
+        [
+            {"$set": {"event_id": {"$toString": "$event_id"}}}  # Convert ObjectId to string
+        ]
+    )
+    return result
 
 # #sample usage THIS MUST FIT FORMAT OF WHERE YOU ARE INSERTING
 # test_doc = {

@@ -1,3 +1,4 @@
+import DatabaseAccess
 import main
 import json
 from userinfo import User
@@ -28,25 +29,27 @@ async def main_method():
     #     "suspension_start": "",
     #     "suspension_end": ""
     # }
-    user = {
-        "user_id": "JDoe1234",
-        "hashed_pass": "password",
-        "past_passwords": [],
-        "email": "bergervaughn@gmail.com",
-        "role": "accountant",
-        "status": True,
-        "first_name": "John",
-        "last_name": "Doe",
-        "profile_picture": 4,
-        "dob": "1980-05-17",
-        "failed_attempts": 0,
-        "password_expiration": "2025-04-05",
-        "security_answers": ["1","2","3"],
-        "suspension_start": "",
-        "suspension_end": ""
-    }
-    task = main.register_user(user, "VBerger2025")
+    # user = {
+    #     "user_id": "JDoe1234",
+    #     "hashed_pass": "password",
+    #     "past_passwords": [],
+    #     "email": "bergervaughn@gmail.com",
+    #     "role": "accountant",
+    #     "status": True,
+    #     "first_name": "John",
+    #     "last_name": "Doe",
+    #     "profile_picture": 4,
+    #     "dob": "1980-05-17",
+    #     "failed_attempts": 0,
+    #     "password_expiration": "2025-04-05",
+    #     "security_answers": ["1","2","3"],
+    #     "suspension_start": "",
+    #     "suspension_end": ""
+    # }
+    # task = main.register_user(user, "VBerger2025")
 
+    #DatabaseAccess.remove_id_recursive()
+    task = main.get_event_log()
 
 
     #task = main.update_user_attribute("WAfton1996", {"first_name":"William"}, "VBerger2025")
