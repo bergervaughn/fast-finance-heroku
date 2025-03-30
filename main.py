@@ -7,6 +7,7 @@ from datetime import date, timedelta
 import FFEmail
 from typing import List
 from userinfo import User, Role, NewUserRequest, Email
+from FinanceDataModels import *
 from fastapi.middleware.cors import CORSMiddleware
 #from DummyDB import user_table, new_user_table
 import DatabaseAccess as DBA
@@ -34,7 +35,6 @@ class Request(BaseModel):
 async def root():
     return {"Greeting": "You have accessed the root of the FastFinance API."}
 
-#the primary way the app will get user data to display on the screen
 @app.get("/users")
 async def fetch_users():
     var = DBA.get('Users')
@@ -48,6 +48,14 @@ async def get_new_user_requests():
     """
 
     return DBA.get('User_Requests')
+
+@app.get("/users/new_user/fetch_one")
+async def get_new_user_request(email : str):
+    result = DBA.get_one('User_Requests', {"email": email})
+    if result is None:
+        return {"Error": "User Request not found"}
+
+    return result
 
 @app.get("/users/login")
 async def login(user_id : str, hashed_pass : str):
@@ -109,14 +117,12 @@ async def forgot_pass(user_id : str):
     user_answers = user['security_answers']
     return user_answers
 
-# The primary way the admin will add a user to the system.
 @app.post("/users")
 async def register_user(user: User, user_id : str):
     if type(user) is not dict:
         user = user.model_dump()
     message = DBA.insert('Users', user, user_id)
     return message
-#weird shit going on tonight
 
 @app.post("/users/new_user")
 async def new_user(user: NewUserRequest):
@@ -148,8 +154,6 @@ async def send_email(email: Email):
     result = FFEmail.send_email(email.recipient, email.subject, email.body)
     return {"Message": result}
 
-# the primary way an admin will update user info.
-# this includes changing personal info about the user and activating or deactivating them
 @app.put("/users/update")
 async def update_user(user: User, user_id: str):
     """
@@ -175,7 +179,6 @@ async def update_user(user: User, user_id: str):
     #print(DBA.get_one('Users', {"user_id": user['user_id']}))
     return DBA.get_one('Users', {"user_id": user['user_id']})
 
-
 @app.put("/users/update_one")
 async def update_user_attribute (user_id: str, change: dict, admin_id : str):
     """
@@ -195,7 +198,6 @@ async def update_user_attribute (user_id: str, change: dict, admin_id : str):
 
     return DBA.get_one('Users', {"user_id": user_id})
 
-
 @app.delete("/users/new_user")
 async def delete_new_user_request(email: str, user_id : str):
     doc = DBA.get_one('User_Requests', {"email": email})
@@ -207,3 +209,11 @@ async def delete_new_user_request(email: str, user_id : str):
     if doc is None:
         return {"message": f"Successfully deleted the user request with email {email}"}
     return {"Error": f"Could not find user request with email {email}"}
+
+@app.get("/accounts")
+async def get_accounts():
+    return DBA.get('Accounts')
+
+@app.post("/accounts")
+async def create_account(account : FinancialAccount, user_id: str):
+    pass
