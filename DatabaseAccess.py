@@ -86,8 +86,6 @@ def update(collection, query, update, user_id):
 
 def insert(collection, document, user_id):
     collection = db[collection]
-    if type(document) is not dict:
-        return type(document)
     collection.insert_one(document)
     event(None, document, user_id)
     return {"message" : "Document successfully inserted"}
