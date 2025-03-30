@@ -117,6 +117,10 @@ async def forgot_pass(user_id : str):
     user_answers = user['security_answers']
     return user_answers
 
+@app.get("users/login/expired_passwords")
+async def get_expired_passwords():
+    pass
+
 @app.post("/users")
 async def register_user(user: User, user_id : str):
     if type(user) is not dict:
