@@ -81,8 +81,8 @@ def update(collection, query, update, user_id):
     collection.update_one(query, {'$set': update})
     updated = collection.find_one(query,{'_id': False})
     if original == updated:
-        error('Attempted to change a document from a state to an identical state')
-        return
+        #error('Attempted to change a document from a state to an identical state')
+        return {'Error': 'Attempted to change a document from a state to an identical state'}
     event(original, updated, user_id)
     return
 
