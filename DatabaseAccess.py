@@ -125,14 +125,15 @@ def check_outdated_passwords():
             update('Users', {'user_id': user_id}, {"status": False}, "System Password Check")  # suspends them
             print(f"User {user_id} has been suspended.")
 
-        elif delta.days > 0 and status == False:
+        result = get_one('Expired_password', {'user_id': user_id})
+        if delta.days > 0 and result is not None:
             print(f'User {user_id} no longer has an expired password.')
 
             delete('Expired_Passwords', {'user_id': user_id}, "System Password Check")
             print(f"User {user_id} has been removed from the Expired Password collection.")
 
-            update('Users', {'user_id': user_id}, {"status": True}, "System Password Check")  # removes the suspension
-            print(f'User {user_id} has been unsuspended.')
+            #update('Users', {'user_id': user_id}, {"status": True}, "System Password Check")  # removes the suspension
+            #print(f'User {user_id} has been unsuspended.')
     return
 
 # def remove_id_recursive():
