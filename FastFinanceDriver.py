@@ -51,7 +51,7 @@ async def main_method():
     #DatabaseAccess.remove_id_recursive()
     #DatabaseAccess.remove_referenced_object_ids()
     #DatabaseAccess.check_outdated_passwords()
-    task = main.get_expired_passwords()
+    #task = main.get_expired_passwords()
 
     #task = main.update_user_attribute("WAfton1996", {"first_name":"William"}, "VBerger2025")
     # user_req = {
@@ -65,7 +65,30 @@ async def main_method():
     # }
     # task = main.new_user(user_req)
     #task = main.delete_new_user_request("president@whitehouse.gov", "VBerger2025")
+    task = main.get_accounts()
+    await task
 
-    print(await task)
+# def execute_tests():
+#     print(main.get_accounts)
+#
+#     account = {
+#         "account_id": 10000000,
+#         "account_name" : "Cash",
+#         "description" : "",
+#         "normal_side" : "debit",
+#         "category" : "Assets",
+#         "sub_category" : "Current Assets",
+#         "initial_balance": 0,
+#         "debit" : 0,
+#         "credit" : 0,
+#         "balance": 0,
+#         "statement" : "BS",
+#         "comment" : "",
+#         "status": True
+#     }
+#
+#     print(main.create_account(account, "VBerger2025"))
+#     result = main.get_accounts
+#     return result
 
 asyncio.run(main_method())
