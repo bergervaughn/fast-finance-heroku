@@ -21,7 +21,15 @@ class Account(BaseModel):
     initial_balance : int = 0
     debit : int = 0
     credit : int = 0
-    balance : int = 0
     statement : Statement
     comment: str = ""
     status: bool = True
+
+class LedgerEntry(BaseModel):
+    date : str = "DD/MM"
+    lines : List = []
+
+class LedgerLine(BaseModel):
+    name : str
+    side : NormalSide
+    amount : int
