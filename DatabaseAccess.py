@@ -63,6 +63,13 @@ def event(original, updated, user_id):
     now = datetime.now()
     event_date = now.strftime("%Y-%m-%d")
     event_time = now.strftime("%H:%M:%S")
+    original['_id'] = str(original['_id'])
+    if original is not None:
+        if '_id' in original:
+            del original['_id']
+    if updated is not None:
+        if '_id' in updated:
+            del updated['_id']
     event_doc = {
         'event_id' : str(ObjectId()),
         'from' : original,
@@ -147,29 +154,29 @@ def check_outdated_passwords():
 #     return result
 #
 #
-# def remove_referenced_object_ids():
-#     collection = db['Events']
-#
-#     # Iterate over all documents in the collection
-#     for event in collection.find():
-#         # Prepare an update document to remove _id from referenced objects
-#         update_fields = {}
-#
-#         # Loop through each field in the event document
-#         for field, value in event.items():
-#             if isinstance(value, dict) and '_id' in value and isinstance(value['_id'], ObjectId):
-#                 # If the value is a dict and contains an ObjectId in _id, remove the _id
-#                 update_fields[f"{field}._id"] = None  # Removing the _id field from the referenced object
-#
-#         if update_fields:
-#             # Perform the update only if there are _id fields to remove
-#             result = collection.update_one(
-#                 {'_id': event['_id']},  # Find the document by its _id
-#                 {'$unset': update_fields}  # Use $unset to remove _id fields in referenced objects
-#             )
-#             print(f"Updated event with _id {event['_id']}: {result.modified_count} fields modified.")
-#         else:
-#             print(f"No referenced _id to remove in event with _id {event['_id']}.")
+def remove_referenced_object_ids():
+    collection = db['Events']
+
+    # Iterate over all documents in the collection
+    for event in collection.find():
+        # Prepare an update document to remove _id from referenced objects
+        update_fields = {}
+
+        # Loop through each field in the event document
+        for field, value in event.items():
+            if isinstance(value, dict) and '_id' in value and isinstance(value['_id'], ObjectId):
+                # If the value is a dict and contains an ObjectId in _id, remove the _id
+                update_fields[f"{field}._id"] = None  # Removing the _id field from the referenced object
+
+        if update_fields:
+            # Perform the update only if there are _id fields to remove
+            result = collection.update_one(
+                {'_id': event['_id']},  # Find the document by its _id
+                {'$unset': update_fields}  # Use $unset to remove _id fields in referenced objects
+            )
+            print(f"Updated event with _id {event['_id']}: {result.modified_count} fields modified.")
+        else:
+            print(f"No referenced _id to remove in event with _id {event['_id']}.")
 
 # #sample usage THIS MUST FIT FORMAT OF WHERE YOU ARE INSERTING
 # test_doc = {
