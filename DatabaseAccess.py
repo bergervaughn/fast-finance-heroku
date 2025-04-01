@@ -63,7 +63,6 @@ def event(original, updated, user_id):
     now = datetime.now()
     event_date = now.strftime("%Y-%m-%d")
     event_time = now.strftime("%H:%M:%S")
-    original['_id'] = str(original['_id'])
     if original is not None:
         if '_id' in original:
             del original['_id']

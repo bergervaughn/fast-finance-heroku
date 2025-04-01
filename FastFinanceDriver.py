@@ -4,7 +4,7 @@ import json
 from userinfo import User
 import asyncio
 
-def main_method():
+async def main_method():
     # email = '{"recipient": "bergervaughn@gmail.com","subject": "API driver test","body": "This is a test of the API using my pycharm driver file"}'
 
     # task = asyncio.create_task(main.send_email(json.loads(email)))
@@ -49,7 +49,7 @@ def main_method():
     # task = main.register_user(user, "VBerger2025")
 
     #DatabaseAccess.remove_id_recursive()
-    DatabaseAccess.remove_referenced_object_ids()
+    #DatabaseAccess.remove_referenced_object_ids()
     #DatabaseAccess.check_outdated_passwords()
     #task = main.get_expired_passwords()
 
@@ -66,33 +66,25 @@ def main_method():
     # task = main.new_user(user_req)
     #task = main.delete_new_user_request("president@whitehouse.gov", "VBerger2025")
     #task = main.get_accounts()
-    print( DatabaseAccess.get('Events'))
+    #print( DatabaseAccess.get('Events'))
+    account = {
+        "account_id": 10000001,
+        "account_name": "Accounts Receivable",
+        "description": "",
+        "normal_side": "debit",
+        "category": "Assets",
+        "sub_category": "Current Assets",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "BS",
+        "comment": "",
+        "status": True
+    }
 
-    #print (await task)
+    task = main.create_account(account, "VBerger2025")
+    print (await task)
 
-# def execute_tests():
-#     print(main.get_accounts)
-#
-    # account = {
-    #     "account_id": 10000000,
-    #     "account_name" : "Cash",
-    #     "description" : "",
-    #     "normal_side" : "debit",
-    #     "category" : "Assets",
-    #     "sub_category" : "Current Assets",
-    #     "initial_balance": 0,
-    #     "debit" : 0,
-    #     "credit" : 0,
-    #     "balance": 0,
-    #     "statement" : "BS",
-    #     "comment" : "",
-    #     "status": True
-    # }
-#
-#     print(main.create_account(account, "VBerger2025"))
-#     result = main.get_accounts
-#     return result
 
-main_method()
-
-#asyncio.run(main_method())
+asyncio.run(main_method())
