@@ -34,17 +34,15 @@ class Account(BaseModel):
     status: bool = True
 
 class Transaction(BaseModel):
-    transaction_id : str
     date: str # "DD/MM"
     account_name : str
-    balance : int = 0
+    balance : int
     side : NormalSide
     post_reference: str # references an account ID
     journal_page : str = "" # calculated automatically on the backend
 
 class JournalEntry(BaseModel):
     journal_id : str
-    journal_page : str
     date : str = ""
     transactions : List = []
     approved_status : ApprovedStatus = "pending"
