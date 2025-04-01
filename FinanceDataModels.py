@@ -46,7 +46,7 @@ class JournalEntry(BaseModel):
     journal_id : str
     journal_page : str
     date : str = ""
-    transactions : List[Transaction()] = []
+    transactions : List = []
     approved_status : ApprovedStatus = "pending"
     comment : str = ""
 

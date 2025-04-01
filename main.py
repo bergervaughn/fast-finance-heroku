@@ -233,7 +233,7 @@ async def get_accounts():
 async def get_account_balance(account_id: int):
     transactions = fetch_ledger_transactions(account_id)
     return sum_transaction_list(transactions)
-    
+
 
 @app.post("/accounts")
 async def create_account(account : Account, user_id: str):

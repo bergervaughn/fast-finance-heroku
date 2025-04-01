@@ -67,23 +67,25 @@ async def main_method():
     #task = main.delete_new_user_request("president@whitehouse.gov", "VBerger2025")
     #task = main.get_accounts()
     #print( DatabaseAccess.get('Events'))
-    account = {
-        "account_id": 10000001,
-        "account_name": "Accounts Receivable",
-        "description": "",
-        "normal_side": "debit",
-        "category": "Assets",
-        "sub_category": "Current Assets",
-        "initial_balance": 0,
-        "debit": 0,
-        "credit": 0,
-        "balance": 0,
-        "statement": "BS",
-        "comment": "",
-        "status": True
-    }
+    # account = {
+    #     "account_id": 10000001,
+    #     "account_name": "Accounts Receivable",
+    #     "description": "",
+    #     "normal_side": "debit",
+    #     "category": "Assets",
+    #     "sub_category": "Current Assets",
+    #     "initial_balance": 0,
+    #     "debit": 0,
+    #     "credit": 0,
+    #     "balance": 0,
+    #     "statement": "BS",
+    #     "comment": "",
+    #     "status": True
+    # }
+    #
+    # task = main.create_account(account, "VBerger2025")
 
-    task = main.create_account(account, "VBerger2025")
+    task = main.get_all_journal_entries()
     print (await task)
 
 
