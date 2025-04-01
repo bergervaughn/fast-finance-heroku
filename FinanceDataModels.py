@@ -14,6 +14,7 @@ class Statement(str, Enum):
 class Account(BaseModel):
     account_id: int
     account_name : str
+    order: int
     description : str = ""
     normal_side : NormalSide
     category : str
