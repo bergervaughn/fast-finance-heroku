@@ -35,6 +35,10 @@ class Request(BaseModel):
 async def root():
     return {"Greeting": "You have accessed the root of the FastFinance API."}
 
+@app.get("/events")
+async def get_event_log():
+    return DBA.get('Events')
+
 @app.get("/users")
 async def fetch_users():
     var = DBA.get('Users')
@@ -224,6 +228,13 @@ async def delete_new_user_request(email: str, user_id : str):
 async def get_accounts():
     return DBA.get('Accounts')
 
+
+@app.get("/accounts/balance")
+async def get_account_balance(account_id: int):
+    transactions = fetch_ledger_transactions(account_id)
+    return sum_transaction_list(transactions)
+    
+
 @app.post("/accounts")
 async def create_account(account : Account, user_id: str):
     if type(account) is not dict:
@@ -257,9 +268,73 @@ async def get_one_account(account_id: int):
     result = DBA.get_one('Accounts', {"account_id" : account_id})
     return result
 
+@app.get("/journal")
+async def get_all_journal_entries():
+    return fetch_journal()
+
+def fetch_journal():
+    # only exists because I call get_all_journal_entries like 3 times in other api calls and using async functions is funky
+    return DBA.get('Journal')
+
+@app.post("/journal")
+async def post_journal_entry(entry : JournalEntry, user_id : str):
+    if type(entry) is not dict:
+        entry = entry.model_dump()
+    transactions = entry['transactions']
+    if transactions is None or len(transactions) == 0:
+        return {"Error": "No transactions in journal entry"}
+
+    journals = fetch_journal()
+
+    total_trans_count = 0
+
+    if journals is not None:
+        for jentry in journals:
+            total_trans_count += len(jentry['transactions']) # gets the total number of transaction lines in the entire journal
+
+    balance = sum_transaction_list(transactions)
+
+    for trans in transactions:
+        total_trans_count += 1
+        journal_page = total_trans_count % JOURNAL_PAGE_LENGTH
+
+        trans['journal_page'] = f"J{journal_page}"
+
+    if balance != 0:
+        return {"Error": "Journal Entry is not balanced. Check your debits and credits again. "}
+
+    entry['date'] = entry['transactions'][0]['date']
+
+    message = DBA.insert('Journal', entry, user_id)
+    return message
+
+def sum_transaction_list(transactions: List[Transaction]):
+    balance = 0
+    if transactions is not None:
+        for trans in transactions:
+            if trans['side'] == "debit":
+                balance += trans['balance']
+            elif trans['side'] == "credit":
+                balance -= trans['balance']
+
+    return balance
 
 
-@app.get("/events")
-async def get_event_log():
-    return DBA.get('Events')
+@app.get("/ledger/transactions")
+async def get_ledger_transactions(account_id: int):
+    return fetch_ledger_transactions(account_id)
 
+def fetch_ledger_transactions(account_id: int):
+    entries = fetch_journal()
+
+    if entries is None:
+        return {}  # there are no entries yet, so it returns empty but valid data so it does not cause an error
+
+    trans_list = []
+    for entry in entries:
+        entry_transactions = entry['transactions']
+        for trans in entry_transactions:
+            if trans['account_id'] == account_id:
+                trans_list.append(trans)
+
+    return trans_list

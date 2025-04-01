@@ -26,7 +26,7 @@ class User(BaseModel):
     profile_picture : int = 0
     dob: str = "1900-01-01"
     failed_attempts: int = 0
-    password_expiration: str = "2025-01-05"
+    password_expiration: str
     security_answers: List[str] = []
     suspension_start : str = ""
     suspension_end : str = ""
