@@ -253,9 +253,11 @@ async def update_account(account : Account, user_id :str):
     return DBA.get_one('Accounts', {"account_id": account_id})
 
 @app.get("/accounts/get_one")
-async def get_one_account(account_id: str):
+async def get_one_account(account_id: int):
     result = DBA.get_one('Accounts', {"account_id" : account_id})
     return result
+
+
 
 @app.get("/events")
 async def get_event_log():
