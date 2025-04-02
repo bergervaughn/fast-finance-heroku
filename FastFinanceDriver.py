@@ -107,7 +107,7 @@ async def main_method():
     # }
 
     # task = main.post_journal_entry(entry, user_id="VBerger2025")
-    task = main.get_all_journal_entries('approved')
+    task = main.get_ledger_transactions(10000000)
     print (await task)
 
 

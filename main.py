@@ -393,7 +393,7 @@ def fetch_ledger_transactions(account_id: int):
     for entry in entries:
         entry_transactions = entry['transactions']
         for trans in entry_transactions:
-            if trans['account_id'] == account_id:
+            if trans['post_reference'] == account_id:
                 trans_list.append(trans)
 
     return trans_list
