@@ -325,10 +325,13 @@ def fetch_journal(status: ApprovedStatus = None):
 async def post_journal_entry(entry : JournalEntry, user_id : str):
     if type(entry) is not dict:
         entry = entry.model_dump()
-    entry['journal_id'] = str(ObjectId())
+
     transactions = entry['transactions']
     if transactions is None or len(transactions) == 0:
         return {"Error": "No transactions in journal entry"}
+
+    if len(transactions) == 1:
+        return {"Error": "Journal entry cannot have only one transaction"}
 
     if entry['approved_status'] == 'approved':
         assign_journal_pages(entry)
@@ -338,8 +341,22 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     if balance != 0:
         return {"Error": "Journal Entry is not balanced. Check your debits and credits again."}
 
-    entry['date'] = entry['transactions'][0]['date']
+
+    date = entry['transactions'][0]['date']
+    entry['date'] = date
+
     entry['comment'] = ""
+
+    transaction1 = transactions[0]['account_name']
+    transaction2 = transactions[1]['account_name']
+
+    identifier = ObjectId().binary[4:].hex()
+    # returns the hexadecimal string of the last 8 bytes of objectid, which are the random value and the counter. This is because
+    # the id I am constructing for journals will already include the date, and this is to ensure that two journal ids cannot be identical
+
+    entry['journal_id'] = date + transaction1 + transaction2 + identifier
+    # each journal ID will be the date, followed by the names of the first 2 accounts affected, followed by a random identifier.
+
     message = DBA.insert('Journal', entry, user_id)
     return message
 
@@ -350,6 +367,15 @@ async def approve_journal_entry(journal_id : str, user_id : str):
     entry['approved_status'] = 'approved'
     assign_journal_pages(entry)
     DBA.update('Journal',{'journal_id':journal_id}, entry, user_id)
+
+@app.put('/journal/reject')
+async def reject_journal_entry(journal_id: str, comment: str, user_id: str):
+    entry = DBA.get_one('Journal', {'journal_id': journal_id})
+
+    entry['approved_status'] = 'rejected'
+    entry['comment']= comment
+    # assign_journal_pages(entry)
+    DBA.update('Journal', {'journal_id': journal_id}, entry, user_id)
 
 def assign_journal_pages(entry: JournalEntry):
     transactions = entry['transactions']
@@ -363,7 +389,7 @@ def assign_journal_pages(entry: JournalEntry):
 
     for trans in transactions:
         total_trans_count += 1
-        journal_page = total_trans_count % JOURNAL_PAGE_LENGTH
+        journal_page = (JOURNAL_PAGE_LENGTH % total_trans_count) + 1
 
         trans['journal_page'] = f"J{journal_page}"
 
@@ -371,21 +397,36 @@ def sum_transaction_list(transactions: List[Transaction]):
     balance = 0
     if transactions is not None:
         for trans in transactions:
+            trans_bal = trans['balance']
+
+            if trans_bal is str:
+                trans['balance'] = int(trans_bal)
+                trans_bal = int(trans_bal)
+
             if trans['side'] == "debit":
                 print(f"Adding {trans['balance']}")
-                balance += trans['balance']
+                balance += trans_bal
             elif trans['side'] == "credit":
                 print(f"Subtracting {trans['balance']}")
-                balance -= trans['balance']
+                balance -= trans_bal
 
     return balance
 
 
 @app.get("/ledger/transactions")
 async def get_ledger_transactions(account_id: int=0):
+    """
+        Returns a list all approved transactions for a specified account, skipping the journal entry data entirely.
+        It will return only the approved transactions, and pending and rejected transactions should not be displayed independently of their journal entry data.
+        If no account_id is specified, it will return all approved journal entries, making this case excellent for the journal page.
+
+        :param account_id:
+        :return list of transaction objects:
+        """
     return fetch_ledger_transactions(account_id)
 
 def fetch_ledger_transactions(account_id: int = 0):
+
     entries = fetch_journal(status=ApprovedStatus.approved)
 
     if entries is None:
