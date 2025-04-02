@@ -282,7 +282,7 @@ async def get_all_journal_entries(status: ApprovedStatus = None):
         - Returns all rejected journal entries. This should be used for the page that views rejected journal entries
 
         None
-        - No parameter given, AKA the default. This will return all journal entries regardless of status. 
+        - No parameter given, AKA the default. This will return all journal entries regardless of status.
 
         :param status:
         :return:
@@ -311,21 +311,7 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     if transactions is None or len(transactions) == 0:
         return {"Error": "No transactions in journal entry"}
 
-    journals = fetch_journal(status=ApprovedStatus.approved)
-
-    total_trans_count = 0
-
-    if journals is not None:
-        for jentry in journals:
-            total_trans_count += len(jentry['transactions']) # gets the total number of transaction lines in the entire journal
-
     balance = sum_transaction_list(transactions)
-
-    for trans in transactions:
-        total_trans_count += 1
-        journal_page = total_trans_count % JOURNAL_PAGE_LENGTH
-
-        trans['journal_page'] = f"J{journal_page}"
 
     if balance != 0:
         return {"Error": "Journal Entry is not balanced. Check your debits and credits again. "}
@@ -334,6 +320,22 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
 
     message = DBA.insert('Journal', entry, user_id)
     return message
+
+def assign_journal_page(entry: JournalEntry):
+    journals = fetch_journal(status=ApprovedStatus.approved)
+
+    total_trans_count = 0
+
+    if journals is not None:
+        for jentry in journals:
+            total_trans_count += len(
+                jentry['transactions'])  # gets the total number of transaction lines in the approved journal
+
+    for trans in transactions:
+        total_trans_count += 1
+        journal_page = total_trans_count % JOURNAL_PAGE_LENGTH
+
+        trans['journal_page'] = f"J{journal_page}"
 
 def sum_transaction_list(transactions: List[Transaction]):
     balance = 0

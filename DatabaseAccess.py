@@ -1,12 +1,8 @@
-from gc import collect
-
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from datetime import datetime
 from bson import ObjectId
 
-import FFEmail
-from TestDatabase import cursor
 
 uri = "mongodb+srv://FastFinancesAdmin:fastfin13@fastfinances.p3wik.mongodb.net/?retryWrites=true&w=majority&appName=FastFinances"
 
