@@ -1,6 +1,8 @@
 import DatabaseAccess
 import main
 import json
+
+from FinanceDataModels import JournalEntry
 from userinfo import User
 import asyncio
 
@@ -85,7 +87,28 @@ async def main_method():
     #
     # task = main.create_account(account, "VBerger2025")
 
-    task = main.get_all_journal_entries()
+    # entry = {
+    #     "journal_id" : "id1",
+    #     "transactions": [
+    #     {
+    #         "date": "2025-04-04",
+    #         "account_name": "Accounts Receivable",
+    #         "balance": 500,
+    #         "side": "credit",
+    #         "post_reference": 10000001
+    #     },
+    #     {
+    #         "date" : "2025-04-04",
+    #         "account_name": "Cash",
+    #         "balance": 500,
+    #         "side": "debit",
+    #         "post_reference" : 10000000
+    #     }],
+    #     "approved_status" : "approved"
+    # }
+
+    # task = main.post_journal_entry(entry, user_id="VBerger2025")
+    task = main.get_all_journal_entries('approved')
     print (await task)
 
 

@@ -1,18 +1,11 @@
-from asyncio import eager_task_factory
-
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from datetime import date, timedelta, datetime
+from fastapi import FastAPI
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
-#import DummyDB
 import FFEmail
-from typing import List
 
-from DatabaseAccess import get_one
 from userinfo import User, Role, NewUserRequest, Email
 from FinanceDataModels import *
 from fastapi.middleware.cors import CORSMiddleware
-#from DummyDB import user_table, new_user_table
 import DatabaseAccess as DBA
 
 app = FastAPI()
@@ -211,7 +204,7 @@ async def update_user(user: User, user_id: str):
     if type(user) is not dict:
         user = user.model_dump()
 
-    DBA.update('Users', {'user_id' : user['user_id']}, user, "System Login")
+    DBA.update('Users', {'user_id' : user['user_id']}, user, user_id)
     #print("Current Document: ")
     #print(DBA.get_one('Users', {"user_id": user['user_id']}))
     return DBA.get_one('Users', {"user_id": user['user_id']})
@@ -294,7 +287,8 @@ async def get_one_account(account_id: int):
 @app.get("/journal")
 async def get_all_journal_entries(status: ApprovedStatus = None):
     """
-        Gets all the journal entries from the database. Has 4 possible parameters:
+        Gets all the journal entries from the database.
+        Has 4 possible parameters:
         {'status': 'approved'}
         - Returns all journal entries with the 'approved' status. This should be used for the main journal only.
 
@@ -310,7 +304,7 @@ async def get_all_journal_entries(status: ApprovedStatus = None):
         :param status:
         :return:
         """
-    return fetch_journal(status=ApprovedStatus.approved)
+    return fetch_journal(status=status)
 
 def fetch_journal(status: ApprovedStatus = None):
     # only exists because I call get_all_journal_entries like 3 times in other api calls and using async functions is funky
@@ -318,11 +312,11 @@ def fetch_journal(status: ApprovedStatus = None):
         return DBA.get('Journal')
 
     elif status == ApprovedStatus.approved:
-        return DBA.get('Journal', {'status':'approved'})
+        return DBA.get('Journal', {'approved_status':'approved'})
     elif status == ApprovedStatus.rejected:
-        return DBA.get('Journal', {'status': 'rejected'})
+        return DBA.get('Journal', {'approved_status': 'rejected'})
     elif status == ApprovedStatus.pending:
-        return DBA.get('Journal', {'status': 'pending'})
+        return DBA.get('Journal', {'approved_status': 'pending'})
     else:
         return {'Error': "Invalid status query: not 'approved', 'rejected', or 'pending'"}
 
@@ -334,8 +328,8 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     if transactions is None or len(transactions) == 0:
         return {"Error": "No transactions in journal entry"}
 
-    if entry['status'] == 'approved':
-        assign_journal_pages(transactions)
+    if entry['approved_status'] == 'approved':
+        assign_journal_pages(entry)
 
     balance = sum_transaction_list(transactions)
 
@@ -350,8 +344,10 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
 @app.put('/journal/approve')
 async def approve_journal_entry(journal_id : str, user_id : str):
     entry = DBA.get_one('Journal', {'journal_id': journal_id})
-    entry['status'] = 'approved'
+
+    entry['approved_status'] = 'approved'
     assign_journal_pages(entry)
+    DBA.update('Journal',{'journal_id':journal_id}, entry, user_id)
 
 def assign_journal_pages(entry: JournalEntry):
     transactions = entry['transactions']

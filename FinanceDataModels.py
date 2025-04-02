@@ -44,7 +44,7 @@ class Transaction(BaseModel):
 
 class JournalEntry(BaseModel):
     journal_id : str
-    date : str = ""
+    date : str = "" # assigned dynamically from transactions
     transactions : List = []
     approved_status : ApprovedStatus = "pending"
     comment : str = ""
