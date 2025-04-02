@@ -1,3 +1,4 @@
+from bson import ObjectId
 from fastapi import FastAPI
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -324,6 +325,7 @@ def fetch_journal(status: ApprovedStatus = None):
 async def post_journal_entry(entry : JournalEntry, user_id : str):
     if type(entry) is not dict:
         entry = entry.model_dump()
+    entry['journal_id'] = str(ObjectId())
     transactions = entry['transactions']
     if transactions is None or len(transactions) == 0:
         return {"Error": "No transactions in journal entry"}
@@ -337,7 +339,7 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
         return {"Error": "Journal Entry is not balanced. Check your debits and credits again. "}
 
     entry['date'] = entry['transactions'][0]['date']
-
+    entry['comment'] = ""
     message = DBA.insert('Journal', entry, user_id)
     return message
 

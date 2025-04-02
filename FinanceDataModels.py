@@ -43,7 +43,7 @@ class Transaction(BaseModel):
     journal_page : str = "" # calculated automatically on the backend
 
 class JournalEntry(BaseModel):
-    journal_id : str
+    journal_id : str= "" # assigned in post function
     date : str = "" # assigned dynamically from transactions
     transactions : List = []
     approved_status : ApprovedStatus = "pending"

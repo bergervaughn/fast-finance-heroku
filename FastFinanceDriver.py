@@ -88,7 +88,6 @@ async def main_method():
     # task = main.create_account(account, "VBerger2025")
 
     # entry = {
-    #     "journal_id" : "id1",
     #     "transactions": [
     #     {
     #         "date": "2025-04-04",
