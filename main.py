@@ -336,7 +336,7 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     balance = sum_transaction_list(transactions)
 
     if balance != 0:
-        return {"Error": "Journal Entry is not balanced. Check your debits and credits again. "}
+        return {"Error": "Journal Entry is not balanced. Check your debits and credits again."}
 
     entry['date'] = entry['transactions'][0]['date']
     entry['comment'] = ""
@@ -372,28 +372,38 @@ def sum_transaction_list(transactions: List[Transaction]):
     if transactions is not None:
         for trans in transactions:
             if trans['side'] == "debit":
+                print(f"Adding {trans['balance']}")
                 balance += trans['balance']
             elif trans['side'] == "credit":
+                print(f"Subtracting {trans['balance']}")
                 balance -= trans['balance']
 
     return balance
 
 
 @app.get("/ledger/transactions")
-async def get_ledger_transactions(account_id: int):
+async def get_ledger_transactions(account_id: int=0):
     return fetch_ledger_transactions(account_id)
 
-def fetch_ledger_transactions(account_id: int):
+def fetch_ledger_transactions(account_id: int = 0):
     entries = fetch_journal(status=ApprovedStatus.approved)
 
     if entries is None:
         return {}  # there are no entries yet, so it returns empty but valid data so it does not cause an error
 
     trans_list = []
-    for entry in entries:
-        entry_transactions = entry['transactions']
-        for trans in entry_transactions:
-            if trans['post_reference'] == account_id:
+
+    if account_id == 0: # gets all transactions from ledger
+        for entry in entries:
+            entry_transactions = entry['transactions']
+            for trans in entry_transactions:
                 trans_list.append(trans)
+
+    else:
+        for entry in entries:
+            entry_transactions = entry['transactions']
+            for trans in entry_transactions:
+                if trans['post_reference'] == account_id:
+                    trans_list.append(trans)
 
     return trans_list

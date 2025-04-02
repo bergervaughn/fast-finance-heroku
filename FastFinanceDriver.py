@@ -106,8 +106,20 @@ async def main_method():
     #     "approved_status" : "approved"
     # }
 
+    # entry = {
+    #     "transactions": [
+    #         {
+    #             "date": "2025-04-04",
+    #             "account_name": "Cash",
+    #             "balance": 500,
+    #             "side": "debit",
+    #             "post_reference": 10000001
+    #         }],
+    #     "approved_status": "approved"
+    # }
+
     # task = main.post_journal_entry(entry, user_id="VBerger2025")
-    task = main.get_ledger_transactions(10000000)
+    task = main.get_ledger_transactions()
     print (await task)
 
 
