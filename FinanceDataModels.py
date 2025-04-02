@@ -38,6 +38,7 @@ class Transaction(BaseModel):
     account_name : str
     balance : int
     side : NormalSide
+    description: str = ""
     post_reference: str # references an account ID
     journal_page : str = "" # calculated automatically on the backend
 

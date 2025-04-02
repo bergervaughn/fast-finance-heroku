@@ -269,12 +269,39 @@ async def get_one_account(account_id: int):
     return result
 
 @app.get("/journal")
-async def get_all_journal_entries():
-    return fetch_journal()
+async def get_all_journal_entries(status: ApprovedStatus = None):
+    """
+        Gets all the journal entries from the database. Has 4 possible parameters:
+        {'status': 'approved'}
+        - Returns all journal entries with the 'approved' status. This should be used for the main journal only.
 
-def fetch_journal():
+        {'status': 'pending'}
+        - Returns all journal entries currently pending. This should be used for the page that managers use to approve pending entries.
+
+        {'status': 'rejected'}
+        - Returns all rejected journal entries. This should be used for the page that views rejected journal entries
+
+        None
+        - No parameter given, AKA the default. This will return all journal entries regardless of status. 
+
+        :param status:
+        :return:
+        """
+    return fetch_journal(status=ApprovedStatus.approved)
+
+def fetch_journal(status: ApprovedStatus = None):
     # only exists because I call get_all_journal_entries like 3 times in other api calls and using async functions is funky
-    return DBA.get('Journal')
+    if status is None:
+        return DBA.get('Journal')
+
+    elif status == ApprovedStatus.approved:
+        return DBA.get('Journal', {'status':'approved'})
+    elif status == ApprovedStatus.rejected:
+        return DBA.get('Journal', {'status': 'rejected'})
+    elif status == ApprovedStatus.pending:
+        return DBA.get('Journal', {'status': 'pending'})
+    else:
+        return {'Error': "Invalid status query: not 'approved', 'rejected', or 'pending'"}
 
 @app.post("/journal")
 async def post_journal_entry(entry : JournalEntry, user_id : str):
@@ -284,7 +311,7 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     if transactions is None or len(transactions) == 0:
         return {"Error": "No transactions in journal entry"}
 
-    journals = fetch_journal()
+    journals = fetch_journal(status=ApprovedStatus.approved)
 
     total_trans_count = 0
 
@@ -325,7 +352,7 @@ async def get_ledger_transactions(account_id: int):
     return fetch_ledger_transactions(account_id)
 
 def fetch_ledger_transactions(account_id: int):
-    entries = fetch_journal()
+    entries = fetch_journal(status=ApprovedStatus.approved)
 
     if entries is None:
         return {}  # there are no entries yet, so it returns empty but valid data so it does not cause an error

@@ -6,6 +6,7 @@ from datetime import datetime
 from bson import ObjectId
 
 import FFEmail
+from TestDatabase import cursor
 
 uri = "mongodb+srv://FastFinancesAdmin:fastfin13@fastfinances.p3wik.mongodb.net/?retryWrites=true&w=majority&appName=FastFinances"
 
@@ -32,9 +33,11 @@ def get_one(collection, query):
 # document = get_one(collection, query)
 # print(document)
 
-def get(collection):
+def get(collection, query=None):
+    if query is None:
+        query = {}
     collection = db[collection]
-    cursor = collection.find({},{'_id': False})
+    cursor = collection.find(query,{'_id': False})
     return cursor.to_list()
 
 # #sample usage
@@ -113,6 +116,7 @@ def check_outdated_passwords():
         user_id = user['user_id']
         status = user['status']
         password_expiration = user['password_expiration']
+
         expiration_date = datetime.strptime(password_expiration, '%Y-%m-%d').date()
         delta = expiration_date - now
         if delta.days <= 0 and status == True:  # checks to make sure they are not already suspended so it doesn't resuspend someone everytime this is checked.
