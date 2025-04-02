@@ -2,10 +2,13 @@ from asyncio import eager_task_factory
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
+from dateutil.relativedelta import relativedelta
 #import DummyDB
 import FFEmail
 from typing import List
+
+from DatabaseAccess import get_one
 from userinfo import User, Role, NewUserRequest, Email
 from FinanceDataModels import *
 from fastapi.middleware.cors import CORSMiddleware
@@ -124,6 +127,26 @@ async def forgot_pass(user_id : str):
 @app.get("/users/login/expired_passwords")
 async def get_expired_passwords():
     return DBA.get('Expired_Passwords')
+
+@app.put("/user/login/reset_password")
+async def reset_password(user_id: str, change: dict, admin_id : str):
+    user = DBA.get_one('Users', {"user_id": user_id})
+    if user is None:
+        return {"Error": "User ID not found."}
+
+    past_passwords = user['past_passwords'] # should return a list
+    current_pass = user['hashed_pass']
+
+    past_passwords.append(current_pass)
+
+    current_date = datetime.now()
+    date_3_months_later = current_date + relativedelta(months=+3)
+    password_expiration = date_3_months_later.strftime("%Y-%m-%d")
+
+    change['past_passwords'] = past_passwords
+    change['password_expiration'] = password_expiration
+
+    DBA.update('Users', {'user_id': user_id, }, change, admin_id)
 
 @app.post("/users")
 async def register_user(user: User, user_id : str):
@@ -311,6 +334,9 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     if transactions is None or len(transactions) == 0:
         return {"Error": "No transactions in journal entry"}
 
+    if entry['status'] == 'approved':
+        assign_journal_pages(transactions)
+
     balance = sum_transaction_list(transactions)
 
     if balance != 0:
@@ -321,15 +347,21 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     message = DBA.insert('Journal', entry, user_id)
     return message
 
-def assign_journal_page(entry: JournalEntry):
+@app.put('/journal/approve')
+async def approve_journal_entry(journal_id : str, user_id : str):
+    entry = DBA.get_one('Journal', {'journal_id': journal_id})
+    entry['status'] = 'approved'
+    assign_journal_pages(entry)
+
+def assign_journal_pages(entry: JournalEntry):
+    transactions = entry['transactions']
     journals = fetch_journal(status=ApprovedStatus.approved)
 
     total_trans_count = 0
 
     if journals is not None:
         for jentry in journals:
-            total_trans_count += len(
-                jentry['transactions'])  # gets the total number of transaction lines in the approved journal
+            total_trans_count += len(jentry['transactions'])  # gets the total number of transaction lines in the approved journal
 
     for trans in transactions:
         total_trans_count += 1

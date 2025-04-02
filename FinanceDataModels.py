@@ -34,7 +34,7 @@ class Account(BaseModel):
     status: bool = True
 
 class Transaction(BaseModel):
-    date: str # "DD/MM"
+    date: str # "YYYY-MM-DD"
     account_name : str
     balance : int
     side : NormalSide
