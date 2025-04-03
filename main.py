@@ -147,6 +147,9 @@ async def register_user(user: User, user_id : str):
     if type(user) is not dict:
         user = user.model_dump()
 
+    if DBA.get_one("Users", {'user_id': user['user_id']}) is not None:
+        return {"Error": "User already exists in system."}
+
     current_date = datetime.now()
     date_3_months_later = current_date + relativedelta(months=+3)
     user['password_expiration'] = date_3_months_later.strftime("%Y-%m-%d")
@@ -367,7 +370,7 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     transaction2 = "".join(transactions[0]['account_name'].split())
 
     identifier = ObjectId().binary[4:].hex()
-    # returns the hexadecimal string of the last 8 bytes of objectid, which are the random value and the counter. This is because
+    # returns the hexadecimal string of the last 8 bytes of object id, which are the random value and the counter. This is because
     # the id I am constructing for journals will already include the date, and this is to ensure that two journal ids cannot be identical
 
     entry['journal_id'] = date + transaction1 + transaction2 + identifier
@@ -451,7 +454,7 @@ def fetch_ledger_transactions(account_id: int = 0):
     entries = fetch_journal(status=ApprovedStatus.approved)
 
     if entries is None:
-        return {}  # there are no entries yet, so it returns empty but valid data so it does not cause an error
+        return {}  # there are no entries yet, so it returns empty but valid data, so it does not cause an error
 
     trans_list = []
 
