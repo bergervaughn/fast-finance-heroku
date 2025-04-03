@@ -307,7 +307,7 @@ async def get_all_journal_entries(status: ApprovedStatus = None):
         """
     return fetch_journal(status=status)
 
-app.get("/journal/get_one")
+@app.get("/journal/get_one")
 async def get_one_journal(journal_id: str):
     result = DBA.get_one('Journal', {'journal_id' : journal_id})
     return result
