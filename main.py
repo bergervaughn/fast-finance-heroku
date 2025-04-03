@@ -146,6 +146,11 @@ async def reset_password(user_id: str, change: dict, admin_id : str):
 async def register_user(user: User, user_id : str):
     if type(user) is not dict:
         user = user.model_dump()
+
+    current_date = datetime.now()
+    date_3_months_later = current_date + relativedelta(months=+3)
+    user['password_expiration'] = date_3_months_later.strftime("%Y-%m-%d")
+
     message = DBA.insert('Users', user, user_id)
     return message
 
@@ -309,7 +314,13 @@ async def get_all_journal_entries(status: ApprovedStatus = None):
 
 @app.get("/journal/get_one")
 async def get_one_journal(journal_id: str):
-    result = DBA.get_one('Journal', {'journal_id' : journal_id})
+    """
+    Returns the info for just one journal.
+    :param journal_id:
+    :return:
+    """
+    result = DBA.get_one('Journal', {'journal_id': journal_id})
+
     return result
 
 def fetch_journal(status: ApprovedStatus = None):
@@ -352,8 +363,8 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
 
     entry['comment'] = ""
 
-    transaction1 = transactions[0]['account_name']
-    transaction2 = transactions[1]['account_name']
+    transaction1 = "".join(transactions[0]['account_name'].split()) #gets affected account name without whitespace
+    transaction2 = "".join(transactions[0]['account_name'].split())
 
     identifier = ObjectId().binary[4:].hex()
     # returns the hexadecimal string of the last 8 bytes of objectid, which are the random value and the counter. This is because

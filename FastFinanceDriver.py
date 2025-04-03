@@ -693,4 +693,5 @@ big_data_list = \
     },
 ]
 
-asyncio.run(insert_data(big_data_list))
+#asyncio.run(insert_data(big_data_list))
+#asyncio.run(DBA.remove_whitespace_from_journal_ids())

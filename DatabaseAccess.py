@@ -153,6 +153,21 @@ def check_outdated_passwords():
 #     return result
 #
 #
+def remove_whitespace_from_journal_ids():
+    collection = db['Journal']
+
+    for journal in collection.find():
+        # if "$set: " in journal['journal_id']:
+        #     journal_id = journal['journal_id']['$set: ']
+        #     print(f"Correct journal_id: {journal_id}")
+        #     collection.update_one({'_id': journal["_id"]}, {'$set': {"journal_id": journal_id}})
+        #     print(f"(Hopefully) fixed a fucked up journal id: {journal['journal_id']}")
+        current_journal_id = journal['journal_id']
+        if isinstance(current_journal_id, str):
+            new_journal_id = "".join(current_journal_id.split())
+            collection.update_one({'_id': journal['_id']}, {"$set": {"journal_id": new_journal_id}})
+            print(f"Removed whitespace from {new_journal_id}")
+
 def remove_referenced_object_ids():
     collection = db['Events']
 
@@ -214,6 +229,8 @@ def delete_entire_database():
 
     print("All collections have been wiped clean.")
 
+
+remove_whitespace_from_journal_ids()
 # #sample usage THIS MUST FIT FORMAT OF WHERE YOU ARE INSERTING
 # test_doc = {
 #     '_id': 'user1234',
