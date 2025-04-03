@@ -161,6 +161,7 @@ async def insert_multiple_data(data_list):
 #if __name__ == "__main__":
 big_data_list = \
 [
+    # Users
     {
         "user_id": "VBerger0125",
         "hashed_pass": "password",
@@ -173,7 +174,7 @@ big_data_list = \
         "profile_picture": 0,
         "dob": "2000-08-16",
         "failed_attempts": 0,
-        "password_expiration": "",
+        "password_expiration": "2025-6-01",
         "security_answers": ["1", "2", "3"],
         "suspension_start": "",
         "suspension_end": ""
@@ -190,7 +191,7 @@ big_data_list = \
         "profile_picture": 0,
         "dob": "2001-09-14",
         "failed_attempts": 0,
-        "password_expiration": "",
+        "password_expiration": "2025-04-05",
         "security_answers": ["1", "2", "3"],
         "suspension_start": "",
         "suspension_end": ""
@@ -207,11 +208,12 @@ big_data_list = \
         "profile_picture": 0,
         "dob": "2002-01-01",
         "failed_attempts": 0,
-        "password_expiration": "",
+        "password_expiration": "2025-01-01",
         "security_answers": ["1", "2", "3"],
         "suspension_start": "",
         "suspension_end": ""
     },
+    # user requests
     {
         "email": "honestabe@gmail.com",
         "first_name": "Abraham",
@@ -221,9 +223,12 @@ big_data_list = \
         "role" : "accountant",
         "security_answers" : ["1", "2", "3"]
     },
+    # accounts
+    ## assets
     {
-        "account_id": 1000,
+        "account_id": 10000000,
         "account_name": "Cash",
+        "order": 101,
         "description": "",
         "normal_side": "debit",
         "category": "Assets",
@@ -237,25 +242,455 @@ big_data_list = \
         "status": True
     },
     {
+        "account_id": 10000001,
+        "account_name": "Accounts Receivable",
+        "order": 102,
+        "description": "",
+        "normal_side": "Debit",
+        "category": "Assets",
+        "sub_category": "Current Assets",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "BS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000003,
+        "account_name": "Prepaid Rent",
+        "order": 103,
+        "description": "",
+        "normal_side": "debit",
+        "category": "Assets",
+        "sub_category": "Current Assets",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "BS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000004,
+        "account_name": "Prepaid Insurance",
+        "order": 104,
+        "description": "",
+        "normal_side": "debit",
+        "category": "Assets",
+        "sub_category": "Current Assents",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "BS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000005,
+        "account_name": "Supplies",
+        "order": 105,
+        "description": "",
+        "normal_side": "debit",
+        "category": "Assets",
+        "sub_category": "Current Assets",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "BS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000006,
+        "account_name": "Office Equipment",
+	    "order": 106,
+        "description": "",
+        "normal_side": "debit",
+        "category": "Property Plant & Equipment",
+        "sub_category": "N/A",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "BS",
+        "comment": "",
+        "status": True
+    },
+    ## liabilities
+    {
+        "account_id": 10000007,
+        "account_name": "Accounts Payable",
+        "order": 107,
+        "description": "",
+        "normal_side": "credit",
+        "category": "Liabilities",
+        "sub_category": "Current Liabilities",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "BS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000008,
+        "account_name": "Salaries Payable",
+        "order": 108,
+        "description": "",
+        "normal_side": "credit",
+        "category": "Liabilities",
+        "sub_category": "Current Liabilities",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "BS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000009,
+        "account_name": "Unearned Revenue",
+        "order": 109,
+        "description": "",
+        "normal_side": "credit",
+        "category": "Liabilities",
+        "sub_category": "N/A",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "BS",
+        "comment": "",
+        "status": True
+    },
+    ## Equity
+    {
+        "account_id": 10000010,
+        "account_name": "Contributed Capital",
+        "order": 110,
+        "description": "",
+        "normal_side": "credit",
+        "category": "Stockholder's Equity",
+        "sub_category": "N/A",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "BS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000011,
+        "account_name": "Retained Earnings",
+        "order": 111,
+        "description": "",
+        "normal_side": "credit",
+        "category": "Stockholder's Equity",
+        "sub_category": "N/A",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "BS",
+        "comment": "",
+        "status": True
+    },
+    ## Revenues
+    {
+        "account_id": 10000012,
+        "account_name": "Service Revenue",
+        "order": 112,
+        "description": "",
+        "normal_side": "credit",
+        "category": "Revenues",
+        "sub_category": "N/A",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "IS",
+        "comment": "",
+        "status": True
+    },
+    ## Expenses
+    {
+        "account_id": 10000013,
+        "account_name": "Insurance Expense",
+        "order": 113,
+        "description": "",
+        "normal_side": "debit",
+        "category": "Expenses",
+        "sub_category": "N/A",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "IS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000014,
+        "account_name": "Depreciation Expense",
+        "order": 114,
+        "description": "N/A",
+        "normal_side": "debit",
+        "category": "Expenses",
+        "sub_category": "",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "IS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000015,
+        "account_name": "Rent Expense",
+        "order": 115,
+        "description": "N/A",
+        "normal_side": "debit",
+        "category": "Expenses",
+        "sub_category": "",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "IS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000016,
+        "account_name": "Supplies Expense",
+        "order": 116,
+        "description": "N/A",
+        "normal_side": "debit",
+        "category": "Expenses",
+        "sub_category": "",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "IS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000017,
+        "account_name": "Salaries Expense",
+        "order": 117,
+        "description": "N/A",
+        "normal_side": "debit",
+        "category": "Expenses",
+        "sub_category": "",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "IS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000018,
+        "account_name": "Telephone Expense",
+        "order": 118,
+        "description": "N/A",
+        "normal_side": "debit",
+        "category": "Expenses",
+        "sub_category": "",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "IS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000019,
+        "account_name": "Utilities Expense",
+        "order": 119,
+        "description": "N/A",
+        "normal_side": "debit",
+        "category": "Expenses",
+        "sub_category": "",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "IS",
+        "comment": "",
+        "status": True
+    },
+    {
+        "account_id": 10000020,
+        "account_name": "Advertising Expense",
+        "order": 120,
+        "description": "N/A",
+        "normal_side": "debit",
+        "category": "Expenses",
+        "sub_category": "",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "IS",
+        "comment": "",
+        "status": True
+    },
+    #journal entries
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-04",
+                "account_name": "Cash",
+                "balance": 10000,
+                "side": "debit",
+                "post_reference": 10000000
+            },
+            {
+                "date": "2025-04-04",
+                "account_name": "Accounts Receivable",
+                "balance": 1500,
+                "side": "debit",
+                "post_reference": 10000001
+            },
+            {
+                "date": "2025-04-04",
+                "account_name": "Supplies",
+                "balance": 1250,
+                "side": "debit",
+                "post_reference": 10000005
+            },
+            {
+                "date": "2025-04-04",
+                "account_name": "Office Equipment",
+                "balance": 7500,
+                "side": "debit",
+                "post_reference": 10000006
+            },
+            {
+                "date": "2025-04-04",
+                "account_name": "Contributed Capital",
+                "balance": 20250,
+                "side": "credit",
+                "post_reference": 10000010
+            }],
+        "approved_status": ""
+    },
+    {
         "journal_id" : "",
         "date": "",
         "transactions": [
             {
-                "date": "",
-                "account_name": "",
-                "balance": 0,
-                "side": "",
-                "post_reference": 0
+                "date": "2025-04-04",
+                "account_name": "Prepaid Rent",
+                "balance": 7500,
+                "side": "debit",
+                "post_reference": 10000003
             },
             {
-                "date": "",
-                "account_name": "",
-                "balance": 0,
-                "side": "",
-                "post_reference": 0
+                "date": "2025-04-04",
+                "account_name": "Cash",
+                "balance": 7500,
+                "side": "credit",
+                "post_reference": 10000000
             }],
         "approved_status": ""
-    }
+    },
+    {
+        "journal_id" : "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-04",
+                "account_name": "Prepaid Insurance",
+                "balance": 1800,
+                "side": "debit",
+                "post_reference": 10000004
+            },
+            {
+                "date": "2025-04-04",
+                "account_name": "Cash",
+                "balance": 1800,
+                "side": "credit",
+                "post_reference": 10000000
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-06",
+                "account_name": "Cash",
+                "balance": 3000,
+                "side": "debit",
+                "post_reference": 10000000
+            },
+            {
+                "date": "2025-04-06",
+                "account_name": "Unearned Revenue",
+                "balance": 3000,
+                "side": "credit",
+                "post_reference": 10000009
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-07",
+                "account_name": "Office Equipment",
+                "balance": 1800,
+                "side": "debit",
+                "post_reference": 10000006
+            },
+            {
+                "date": "2025-04-07",
+                "account_name": "Accounts Payable",
+                "balance": 1800,
+                "side": "credit",
+                "post_reference": 10000007
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-08",
+                "account_name": "Cash",
+                "balance": 800,
+                "side": "debit",
+                "post_reference": 10000000
+            },
+            {
+                "date": "2025-04-08",
+                "account_name": "Accounts Receivable",
+                "balance": 800,
+                "side": "credit",
+                "post_reference": 10000001
+            }],
+        "approved_status": ""
+    },
 ]
 
 asyncio.run(insert_data(big_data_list))

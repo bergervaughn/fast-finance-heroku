@@ -176,6 +176,43 @@ def remove_referenced_object_ids():
             print(f"Updated event with _id {event['_id']}: {result.modified_count} fields modified.")
         else:
             print(f"No referenced _id to remove in event with _id {event['_id']}.")
+def update_account_balance(account_id: str, side: str, balance: int, user_id: str):
+    account = get_one('Accounts', {'account_id': account_id})
+    acc_debit = account['debit']
+    acc_credit = account['credit']
+    acc_balance = account['balance']
+
+    change = {}
+    if side == "debit":
+        change['debit'] = balance + acc_debit
+    if side == "credit":
+        change['credit'] = balance + acc_credit
+        balance = -1 * balance
+
+    change['balance'] = acc_balance + balance
+
+    update('Accounts', {'account_id': account_id}, change, user_id)
+
+def delete_entire_database():
+    user_input = input("Are you absolutely sure? y/n")
+    if user_input != "y":
+        return
+    user_input = input("Did you ask Vaughn first? y/n")
+    if user_input != "y":
+        return
+    user_input = input("Are you POSITIVELY absolutely sure? Last chance. y/n")
+    if user_input != "y":
+        return
+
+
+    for collection_name in db.list_collection_names():
+        collection = db[collection_name]
+
+        collection.delete_many({})
+
+        print(f"Cleared all data from collection: {collection_name}")
+
+    print("All collections have been wiped clean.")
 
 # #sample usage THIS MUST FIT FORMAT OF WHERE YOU ARE INSERTING
 # test_doc = {

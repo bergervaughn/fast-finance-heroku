@@ -307,6 +307,11 @@ async def get_all_journal_entries(status: ApprovedStatus = None):
         """
     return fetch_journal(status=status)
 
+app.get("/journal/get_one")
+async def get_one_journal(journal_id: str):
+    result = DBA.get_one('Journal', {'journal_id' : journal_id})
+    return result
+
 def fetch_journal(status: ApprovedStatus = None):
     # only exists because I call get_all_journal_entries like 3 times in other api calls and using async functions is funky
     if status is None:
@@ -366,6 +371,11 @@ async def approve_journal_entry(journal_id : str, user_id : str):
 
     entry['approved_status'] = 'approved'
     assign_journal_pages(entry)
+
+    # transactions = entry['transactions']
+    # for trans in transactions:
+    #
+    #     DBA.update_account_balance(trans['post_reference'], trans['side'], trans['balance'], )
     DBA.update('Journal',{'journal_id':journal_id}, entry, user_id)
 
 @app.put('/journal/reject')
