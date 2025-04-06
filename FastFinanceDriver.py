@@ -691,6 +691,306 @@ big_data_list = \
             }],
         "approved_status": ""
     },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-11",
+                "account_name": "Advertising Expense",
+                "balance": 120,
+                "side": "debit",
+                "post_reference": 10000020
+            },
+            {
+                "date": "2025-04-11",
+                "account_name": "Cash",
+                "balance": 120,
+                "side": "credit",
+                "post_reference": 10000000
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-12",
+                "account_name": "Accounts Payable",
+                "balance": 800,
+                "side": "debit",
+                "post_reference": 10000007
+            },
+            {
+                "date": "2025-04-12",
+                "account_name": "Cash",
+                "balance": 800,
+                "side": "credit",
+                "post_reference": 10000000
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-01-15",
+                "account_name": "Accounts Receivable",
+                "balance": 2250,
+                "side": "debit",
+                "post_reference": 10000001
+            },
+            {
+                "date": "2025-01-15",
+                "account_name": "Service Revenue",
+                "balance": 2250,
+                "side": "credit",
+                "post_reference": 10000012
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-15",
+                "account_name": "Salaries Expense",
+                "balance": 400,
+                "side": "debit",
+                "post_reference": 10000017
+            },
+            {
+                "date": "2025-04-15",
+                "account_name": "Cash",
+                "balance": 400,
+                "side": "credit",
+                "post_reference": 10000000
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-15",
+                "account_name": "Cash",
+                "balance": 3175,
+                "side": "debit",
+                "post_reference": 10000000
+            },
+            {
+                "date": "2025-04-15",
+                "account_name": "Service Revenue",
+                "balance": 3175,
+                "side": "credit",
+                "post_reference": 10000012
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-18",
+                "account_name": "Supplies",
+                "balance": 750,
+                "side": "debit",
+                "post_reference": 10000005
+            },
+            {
+                "date": "2025-04-18",
+                "account_name": "Cash",
+                "balance": 750,
+                "side": "credit",
+                "post_reference": 10000000
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-22",
+                "account_name": "Accounts Receivable",
+                "balance": 1100,
+                "side": "debit",
+                "post_reference": 10000001
+            },
+            {
+                "date": "2025-04-22",
+                "account_name": "Service Revenue",
+                "balance": 1100,
+                "side": "credit",
+                "post_reference": 10000012
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-22",
+                "account_name": "Cash",
+                "balance": 1850,
+                "side": "debit",
+                "post_reference": 10000000
+            },
+            {
+                "date": "2025-04-22",
+                "account_name": "Service Revenue",
+                "balance": 1850,
+                "side": "credit",
+                "post_reference": 10000012
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-22",
+                "account_name": "Cash",
+                "balance": 1600,
+                "side": "debit",
+                "post_reference": 10000000
+            },
+            {
+                "date": "2025-04-22",
+                "account_name": "Accounts Receivable",
+                "balance": 1600,
+                "side": "credit",
+                "post_reference": 10000001
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-27",
+                "account_name": "Salaries Expense",
+                "balance": 400,
+                "side": "debit",
+                "post_reference": 10000017
+            },
+            {
+                "date": "2025-04-27",
+                "account_name": "Cash",
+                "balance": 400,
+                "side": "credit",
+                "post_reference": 10000000
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-28",
+                "account_name": "Telephone Expense",
+                "balance": 130,
+                "side": "debit",
+                "post_reference": 10000018
+            },
+            {
+                "date": "2025-04-28",
+                "account_name": "Cash",
+                "balance": 130,
+                "side": "credit",
+                "post_reference": 10000000
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-29",
+                "account_name": "Utilities Expense",
+                "balance": 200,
+                "side": "debit",
+                "post_reference": 10000019
+            },
+            {
+                "date": "2025-04-29",
+                "account_name": "Cash",
+                "balance": 200,
+                "side": "credit",
+                "post_reference": 10000000
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-29",
+                "account_name": "Cash",
+                "balance": 2050,
+                "side": "debit",
+                "post_reference": 10000000
+            },
+            {
+                "date": "2025-04-29",
+                "account_name": "Service Revenue",
+                "balance": 2050,
+                "side": "credit",
+                "post_reference": 10000012
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-29",
+                "account_name": "Accounts Receivable",
+                "balance": 1000,
+                "side": "debit",
+                "post_reference": 10000001
+            },
+            {
+                "date": "2025-04-29",
+                "account_name": "Service Revenue",
+                "balance": 1000,
+                "side": "credit",
+                "post_reference": 10000012
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "transactions": [
+            {
+                "date": "2025-04-29",
+                "account_name": "Salaries Expense",
+                "balance": 4500,
+                "side": "debit",
+                "post_reference": 10000017
+            },
+            {
+                "date": "2025-04-29",
+                "account_name": "Cash",
+                "balance": 4500,
+                "side": "credit",
+                "post_reference": 10000000
+            }],
+        "approved_status": ""
+    },
 ]
 
 #asyncio.run(insert_data(big_data_list))
