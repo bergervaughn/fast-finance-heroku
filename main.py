@@ -428,9 +428,9 @@ def assign_journal_pages(entry: JournalEntry):
 
     for trans in transactions:
         total_trans_count += 1
-        journal_page = (JOURNAL_PAGE_LENGTH % total_trans_count) + 1
-
+        journal_page = (total_trans_count // JOURNAL_PAGE_LENGTH) + 1 #(JOURNAL_PAGE_LENGTH % total_trans_count) + 1
         trans['journal_page'] = f"J{journal_page}"
+
 
 def sum_transaction_list(transactions: List[Transaction]):
     balance = 0

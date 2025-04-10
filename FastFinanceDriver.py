@@ -158,6 +158,11 @@ async def insert_multiple_data(data_list):
     tasks = [insert_data(data) for data in data_list]
     await asyncio.gather(*tasks)
 
+async def approve_all_journals():
+    tasks = [main.approve_journal_entry(journal['journal_id'], "VBerger2025") for journal in DBA.get('Journal')]
+    await asyncio.gather(*tasks)
+
+
 #if __name__ == "__main__":
 big_data_list = \
 [
@@ -736,14 +741,14 @@ big_data_list = \
         "date": "",
         "transactions": [
             {
-                "date": "2025-01-15",
+                "date": "2025-04-15",
                 "account_name": "Accounts Receivable",
                 "balance": 2250,
                 "side": "debit",
                 "post_reference": 10000001
             },
             {
-                "date": "2025-01-15",
+                "date": "2025-04-15",
                 "account_name": "Service Revenue",
                 "balance": 2250,
                 "side": "credit",
@@ -993,8 +998,11 @@ big_data_list = \
     },
 ]
 
+asyncio.run(approve_all_journals())
+
 #asyncio.run(insert_multiple_data(big_data_list))
-async def main_function():
-    task = main.get_accounts()
-    print(await task)
-asyncio.run(main_function())
+
+# async def main_function():
+#     task = main.get_accounts()
+#     print(await task)
+# asyncio.run(main_function())
