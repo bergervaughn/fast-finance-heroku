@@ -352,7 +352,10 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     if len(transactions) == 1:
         return {"Error": "Journal entry cannot have only one transaction"}
 
-    if entry['approved_status'] == 'approved':
+    status = entry['approved_status']
+    if status != 'approved' or status != 'pending':
+        entry['approved_status'] = 'pending'
+    if status == 'approved':
         assign_journal_pages(entry)
 
     balance = sum_transaction_list(transactions)
@@ -428,10 +431,10 @@ def sum_transaction_list(transactions: List[Transaction]):
                 trans_bal = int(trans_bal)
 
             if trans['side'] == "debit":
-                print(f"Adding {trans['balance']}")
+                #print(f"Adding {trans['balance']}")
                 balance += trans_bal
             elif trans['side'] == "credit":
-                print(f"Subtracting {trans['balance']}")
+                #print(f"Subtracting {trans['balance']}")
                 balance -= trans_bal
 
     return balance

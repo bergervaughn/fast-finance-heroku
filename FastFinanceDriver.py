@@ -163,7 +163,7 @@ big_data_list = \
 [
     # Users
     {
-        "user_id": "VBerger0125",
+        "user_id": "VBerger2025",
         "hashed_pass": "password",
         "past_passwords": [],
         "email": "bergervaughn@gmail.com",
@@ -993,5 +993,5 @@ big_data_list = \
     },
 ]
 
-#asyncio.run(insert_data(big_data_list))
+asyncio.run(insert_multiple_data(big_data_list))
 #asyncio.run(DBA.remove_whitespace_from_journal_ids())

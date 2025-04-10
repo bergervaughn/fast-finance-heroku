@@ -209,13 +209,13 @@ def update_account_balance(account_id: str, side: str, balance: int, user_id: st
     update('Accounts', {'account_id': account_id}, change, user_id)
 
 def delete_entire_database():
-    user_input = input("Are you absolutely sure? y/n")
+    user_input = input("Are you absolutely sure? y/n ")
     if user_input != "y":
         return
-    user_input = input("Did you ask Vaughn first? y/n")
+    user_input = input("Did you ask Vaughn first? y/n ")
     if user_input != "y":
         return
-    user_input = input("Are you POSITIVELY absolutely sure? Last chance. y/n")
+    user_input = input("Are you POSITIVELY absolutely sure? Last chance. y/n ")
     if user_input != "y":
         return
 
@@ -229,8 +229,9 @@ def delete_entire_database():
 
     print("All collections have been wiped clean.")
 
+#delete_entire_database()
 
-remove_whitespace_from_journal_ids()
+#remove_whitespace_from_journal_ids()
 # #sample usage THIS MUST FIT FORMAT OF WHERE YOU ARE INSERTING
 # test_doc = {
 #     '_id': 'user1234',
