@@ -254,11 +254,16 @@ async def get_accounts():
     return DBA.get('Accounts')
 
 
-@app.get("/accounts/balance")
-async def get_account_balance(account_id: int):
-    transactions = fetch_ledger_transactions(account_id)
-    return sum_transaction_list(transactions)
+@app.get("/accounts/balances")
+async def get_account_balances():
+    accounts = DBA.get('Accounts', {})
+    balances = []
+    for account in accounts:
+        account_id = account['account_id']
+        bal = sum_transaction_list(account_id)
+        balances.append(bal)
 
+    return balances
 
 @app.post("/accounts")
 async def create_account(account : Account, user_id: str):
