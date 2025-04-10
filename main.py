@@ -251,7 +251,14 @@ async def delete_new_user_request(email: str, user_id : str):
 
 @app.get("/accounts")
 async def get_accounts():
-    return DBA.get('Accounts')
+    accounts = DBA.get('Accounts')
+
+    for account in accounts:
+        account_id = account['account_id']
+        bal = sum_transaction_list(fetch_ledger_transactions(account_id))
+        account['balance'] = bal
+
+    return accounts
 
 
 @app.get("/accounts/balances")
