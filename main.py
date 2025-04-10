@@ -260,7 +260,7 @@ async def get_account_balances():
     balances = []
     for account in accounts:
         account_id = account['account_id']
-        bal = sum_transaction_list(account_id)
+        bal = sum_transaction_list(fetch_ledger_transactions(account_id))
         balances.append(bal)
 
     return balances

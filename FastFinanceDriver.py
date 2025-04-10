@@ -993,5 +993,8 @@ big_data_list = \
     },
 ]
 
-asyncio.run(insert_multiple_data(big_data_list))
-#asyncio.run(DBA.remove_whitespace_from_journal_ids())
+#asyncio.run(insert_multiple_data(big_data_list))
+async def main_function():
+    task = main.get_account_balances()
+    print(await task)
+asyncio.run(main_function())
