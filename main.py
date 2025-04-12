@@ -377,7 +377,7 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     if status == 'approved':
         assign_journal_pages(entry)
 
-    
+
 
     balance = sum_transaction_list(transactions)
 
@@ -437,7 +437,7 @@ def assign_journal_pages(entry: JournalEntry):
 
     for trans in transactions:
         total_trans_count += 1
-        journal_page = (total_trans_count - 1 // JOURNAL_PAGE_LENGTH) + 1
+        journal_page = ((total_trans_count - 1) // JOURNAL_PAGE_LENGTH) + 1
         trans['journal_page'] = f"J{journal_page}"
 
 

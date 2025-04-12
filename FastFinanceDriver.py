@@ -2,6 +2,7 @@ import DatabaseAccess
 import main
 import json
 
+from DatabaseAccess import delete_entire_database
 from FinanceDataModels import JournalEntry
 from main import *
 from userinfo import User
@@ -575,6 +576,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-04",
@@ -616,6 +618,7 @@ big_data_list = \
     {
         "journal_id" : "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-04",
@@ -636,6 +639,7 @@ big_data_list = \
     {
         "journal_id" : "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-04",
@@ -656,6 +660,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-06",
@@ -676,6 +681,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-07",
@@ -696,6 +702,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-08",
@@ -716,6 +723,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-11",
@@ -736,6 +744,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-12",
@@ -756,6 +765,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-15",
@@ -776,6 +786,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-15",
@@ -796,6 +807,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-15",
@@ -816,6 +828,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-18",
@@ -836,6 +849,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-22",
@@ -856,6 +870,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-22",
@@ -876,6 +891,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-22",
@@ -896,6 +912,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-27",
@@ -916,6 +933,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-28",
@@ -936,6 +954,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-29",
@@ -956,6 +975,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-29",
@@ -976,6 +996,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-29",
@@ -996,6 +1017,7 @@ big_data_list = \
     {
         "journal_id": "",
         "date": "",
+        "journal_type": "normal",
         "transactions": [
             {
                 "date": "2025-04-29",
@@ -1141,6 +1163,8 @@ big_data_list = \
         "approved_status": ""
     },
 ]
+
+delete_entire_database()
 
 asyncio.run(insert_multiple_data(big_data_list))
 asyncio.run(approve_all_journals())
