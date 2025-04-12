@@ -362,6 +362,8 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     if type(entry) is not dict:
         entry = entry.model_dump()
 
+
+
     transactions = entry['transactions']
     if transactions is None or len(transactions) == 0:
         return {"Error": "No transactions in journal entry"}
@@ -374,6 +376,8 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
         entry['approved_status'] = 'pending'
     if status == 'approved':
         assign_journal_pages(entry)
+
+    
 
     balance = sum_transaction_list(transactions)
 

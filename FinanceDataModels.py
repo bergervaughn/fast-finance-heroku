@@ -49,7 +49,7 @@ class Transaction(BaseModel):
 class JournalEntry(BaseModel):
     journal_id : str= "" # assigned in post function
     date : str = "" # assigned dynamically from transactions
-    journal_type : JournalType = "normal"
+    journal_type : JournalType = JournalType.normal
     transactions : List = []
     approved_status : ApprovedStatus = "pending"
     comment : str = ""
