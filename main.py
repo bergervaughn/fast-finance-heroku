@@ -338,16 +338,15 @@ async def get_one_journal(journal_id: str):
 
     return result
 
-def fetch_journal(status: ApprovedStatus = None, journal_type: JournalType = JournalType.normal):
+def fetch_journal(status: ApprovedStatus = None):
     # only exists because I call get_all_journal_entries like 3 times in other api calls and using async functions is funky
-    journal_type = str(journal_type)
 
     if status is None:
-        return DBA.get('Journal', {'journal_type': journal_type})
+        return DBA.get('Journal')
 
     if status == ApprovedStatus.approved or status == ApprovedStatus.pending or status == ApprovedStatus.rejected:
         status = status.value
-        return DBA.get('Journal', {'approved_status': status, 'journal_type': journal_type})
+        return DBA.get('Journal', {'approved_status': status})
 
     # if status == ApprovedStatus.approved:
     #     return DBA.get('Journal', {'approved_status':'approved'})

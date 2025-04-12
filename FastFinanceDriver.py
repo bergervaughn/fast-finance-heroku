@@ -1142,7 +1142,6 @@ big_data_list = \
     },
 ]
 
-
 asyncio.run(insert_multiple_data(big_data_list))
 asyncio.run(approve_all_journals())
 
