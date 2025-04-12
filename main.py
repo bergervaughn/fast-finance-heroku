@@ -12,7 +12,7 @@ import DatabaseAccess as DBA
 app = FastAPI()
 
 origins = ["*"]
-
+# API Link: https://fast-finance-e250d1a7d65a.herokuapp.com/
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -338,19 +338,25 @@ async def get_one_journal(journal_id: str):
 
     return result
 
-def fetch_journal(status: ApprovedStatus = None):
+def fetch_journal(status: ApprovedStatus = None, journal_type: JournalType = JournalType.normal):
     # only exists because I call get_all_journal_entries like 3 times in other api calls and using async functions is funky
-    if status is None:
-        return DBA.get('Journal')
+    journal_type = str(journal_type)
 
-    elif status == ApprovedStatus.approved:
-        return DBA.get('Journal', {'approved_status':'approved'})
-    elif status == ApprovedStatus.rejected:
-        return DBA.get('Journal', {'approved_status': 'rejected'})
-    elif status == ApprovedStatus.pending:
-        return DBA.get('Journal', {'approved_status': 'pending'})
-    else:
-        return {'Error': "Invalid status query: not 'approved', 'rejected', or 'pending'"}
+    if status is None:
+        return DBA.get('Journal', {'journal_type': journal_type})
+
+    if status == ApprovedStatus.approved or status == ApprovedStatus.pending or status == ApprovedStatus.rejected:
+        status = status.value
+        return DBA.get('Journal', {'approved_status': status, 'journal_type': journal_type})
+
+    # if status == ApprovedStatus.approved:
+    #     return DBA.get('Journal', {'approved_status':'approved'})
+    # elif status == ApprovedStatus.rejected:
+    #     return DBA.get('Journal', {'approved_status': 'rejected'})
+    # elif status == ApprovedStatus.pending:
+    #     return DBA.get('Journal', {'approved_status': 'pending'})
+    # else:
+    #     return {'Error': "Invalid status query: not 'approved', 'rejected', or 'pending'"}
 
 @app.post("/journal")
 async def post_journal_entry(entry : JournalEntry, user_id : str):
@@ -428,7 +434,7 @@ def assign_journal_pages(entry: JournalEntry):
 
     for trans in transactions:
         total_trans_count += 1
-        journal_page = (total_trans_count // JOURNAL_PAGE_LENGTH) + 1 #(JOURNAL_PAGE_LENGTH % total_trans_count) + 1
+        journal_page = (total_trans_count - 1 // JOURNAL_PAGE_LENGTH) + 1
         trans['journal_page'] = f"J{journal_page}"
 
 
@@ -487,3 +493,11 @@ def fetch_ledger_transactions(account_id: int = 0):
                     trans_list.append(trans)
 
     return trans_list
+
+# @app.get("/journal/adjusting")
+# async def get_adjusting_journal_entries(status: ApprovedStatus = None):
+#     return fetch_journal(status, JournalType.adjusting)
+#
+# @app.get('/journal/adjusting/get_one')
+# async def get_one_adjusting_journal_entry(journal_id: str):
+#     return DBA.get_one('Journal', {'journal_id': journal_id})

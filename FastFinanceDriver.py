@@ -231,7 +231,7 @@ big_data_list = \
     # accounts
     ## assets
     {
-        "account_id": 10000000,
+        "account_id": 10000100,
         "account_name": "Cash",
         "order": 101,
         "description": "",
@@ -247,11 +247,11 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000001,
+        "account_id": 10000101,
         "account_name": "Accounts Receivable",
         "order": 102,
         "description": "",
-        "normal_side": "Debit",
+        "normal_side": "debit",
         "category": "Assets",
         "sub_category": "Current Assets",
         "initial_balance": 0,
@@ -263,7 +263,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000003,
+        "account_id": 10000102,
         "account_name": "Prepaid Rent",
         "order": 103,
         "description": "",
@@ -279,7 +279,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000004,
+        "account_id": 10000103,
         "account_name": "Prepaid Insurance",
         "order": 104,
         "description": "",
@@ -295,7 +295,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000005,
+        "account_id": 10000104,
         "account_name": "Supplies",
         "order": 105,
         "description": "",
@@ -310,8 +310,9 @@ big_data_list = \
         "comment": "",
         "status": True
     },
+    # Property Plant & Equipment
     {
-        "account_id": 10000006,
+        "account_id": 10000200,
         "account_name": "Office Equipment",
 	    "order": 106,
         "description": "",
@@ -326,9 +327,25 @@ big_data_list = \
         "comment": "",
         "status": True
     },
+    {
+        "account_id": 10000201,
+        "account_name": "Accumulated Depreciation",
+	    "order": 106,
+        "description": "",
+        "normal_side": "credit",
+        "category": "Property Plant & Equipment",
+        "sub_category": "N/A",
+        "initial_balance": 0,
+        "debit": 0,
+        "credit": 0,
+        "balance": 0,
+        "statement": "BS",
+        "comment": "",
+        "status": True
+    },
     ## liabilities
     {
-        "account_id": 10000007,
+        "account_id": 10000300,
         "account_name": "Accounts Payable",
         "order": 107,
         "description": "",
@@ -344,7 +361,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000008,
+        "account_id": 10000301,
         "account_name": "Salaries Payable",
         "order": 108,
         "description": "",
@@ -360,7 +377,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000009,
+        "account_id": 10000302,
         "account_name": "Unearned Revenue",
         "order": 109,
         "description": "",
@@ -377,7 +394,7 @@ big_data_list = \
     },
     ## Equity
     {
-        "account_id": 10000010,
+        "account_id": 10000303,
         "account_name": "Contributed Capital",
         "order": 110,
         "description": "",
@@ -393,7 +410,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000011,
+        "account_id": 10000304,
         "account_name": "Retained Earnings",
         "order": 111,
         "description": "",
@@ -410,7 +427,7 @@ big_data_list = \
     },
     ## Revenues
     {
-        "account_id": 10000012,
+        "account_id": 10000500,
         "account_name": "Service Revenue",
         "order": 112,
         "description": "",
@@ -427,7 +444,7 @@ big_data_list = \
     },
     ## Expenses
     {
-        "account_id": 10000013,
+        "account_id": 10000600,
         "account_name": "Insurance Expense",
         "order": 113,
         "description": "",
@@ -443,7 +460,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000014,
+        "account_id": 10000601,
         "account_name": "Depreciation Expense",
         "order": 114,
         "description": "N/A",
@@ -459,7 +476,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000015,
+        "account_id": 10000602,
         "account_name": "Rent Expense",
         "order": 115,
         "description": "N/A",
@@ -475,7 +492,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000016,
+        "account_id": 10000603,
         "account_name": "Supplies Expense",
         "order": 116,
         "description": "N/A",
@@ -491,7 +508,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000017,
+        "account_id": 10000604,
         "account_name": "Salaries Expense",
         "order": 117,
         "description": "N/A",
@@ -507,7 +524,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000018,
+        "account_id": 10000605,
         "account_name": "Telephone Expense",
         "order": 118,
         "description": "N/A",
@@ -523,7 +540,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000019,
+        "account_id": 10000606,
         "account_name": "Utilities Expense",
         "order": 119,
         "description": "N/A",
@@ -539,7 +556,7 @@ big_data_list = \
         "status": True
     },
     {
-        "account_id": 10000020,
+        "account_id": 10000607,
         "account_name": "Advertising Expense",
         "order": 120,
         "description": "N/A",
@@ -564,35 +581,35 @@ big_data_list = \
                 "account_name": "Cash",
                 "balance": 10000,
                 "side": "debit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             },
             {
                 "date": "2025-04-04",
                 "account_name": "Accounts Receivable",
                 "balance": 1500,
                 "side": "debit",
-                "post_reference": 10000001
+                "post_reference": 10000101
             },
             {
                 "date": "2025-04-04",
                 "account_name": "Supplies",
                 "balance": 1250,
                 "side": "debit",
-                "post_reference": 10000005
+                "post_reference": 10000104
             },
             {
                 "date": "2025-04-04",
                 "account_name": "Office Equipment",
                 "balance": 7500,
                 "side": "debit",
-                "post_reference": 10000006
+                "post_reference": 10000200
             },
             {
                 "date": "2025-04-04",
                 "account_name": "Contributed Capital",
                 "balance": 20250,
                 "side": "credit",
-                "post_reference": 10000010
+                "post_reference": 10000303
             }],
         "approved_status": ""
     },
@@ -605,14 +622,14 @@ big_data_list = \
                 "account_name": "Prepaid Rent",
                 "balance": 7500,
                 "side": "debit",
-                "post_reference": 10000003
+                "post_reference": 10000102
             },
             {
                 "date": "2025-04-04",
                 "account_name": "Cash",
                 "balance": 7500,
                 "side": "credit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             }],
         "approved_status": ""
     },
@@ -625,14 +642,14 @@ big_data_list = \
                 "account_name": "Prepaid Insurance",
                 "balance": 1800,
                 "side": "debit",
-                "post_reference": 10000004
+                "post_reference": 10000103
             },
             {
                 "date": "2025-04-04",
                 "account_name": "Cash",
                 "balance": 1800,
                 "side": "credit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             }],
         "approved_status": ""
     },
@@ -645,14 +662,14 @@ big_data_list = \
                 "account_name": "Cash",
                 "balance": 3000,
                 "side": "debit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             },
             {
                 "date": "2025-04-06",
                 "account_name": "Unearned Revenue",
                 "balance": 3000,
                 "side": "credit",
-                "post_reference": 10000009
+                "post_reference": 10000302
             }],
         "approved_status": ""
     },
@@ -665,14 +682,14 @@ big_data_list = \
                 "account_name": "Office Equipment",
                 "balance": 1800,
                 "side": "debit",
-                "post_reference": 10000006
+                "post_reference": 10000200
             },
             {
                 "date": "2025-04-07",
                 "account_name": "Accounts Payable",
                 "balance": 1800,
                 "side": "credit",
-                "post_reference": 10000007
+                "post_reference": 10000300
             }],
         "approved_status": ""
     },
@@ -685,14 +702,14 @@ big_data_list = \
                 "account_name": "Cash",
                 "balance": 800,
                 "side": "debit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             },
             {
                 "date": "2025-04-08",
                 "account_name": "Accounts Receivable",
                 "balance": 800,
                 "side": "credit",
-                "post_reference": 10000001
+                "post_reference": 10000101
             }],
         "approved_status": ""
     },
@@ -705,14 +722,14 @@ big_data_list = \
                 "account_name": "Advertising Expense",
                 "balance": 120,
                 "side": "debit",
-                "post_reference": 10000020
+                "post_reference": 10000607
             },
             {
                 "date": "2025-04-11",
                 "account_name": "Cash",
                 "balance": 120,
                 "side": "credit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             }],
         "approved_status": ""
     },
@@ -725,14 +742,14 @@ big_data_list = \
                 "account_name": "Accounts Payable",
                 "balance": 800,
                 "side": "debit",
-                "post_reference": 10000007
+                "post_reference": 10000300
             },
             {
                 "date": "2025-04-12",
                 "account_name": "Cash",
                 "balance": 800,
                 "side": "credit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             }],
         "approved_status": ""
     },
@@ -745,14 +762,14 @@ big_data_list = \
                 "account_name": "Accounts Receivable",
                 "balance": 2250,
                 "side": "debit",
-                "post_reference": 10000001
+                "post_reference": 10000101
             },
             {
                 "date": "2025-04-15",
                 "account_name": "Service Revenue",
                 "balance": 2250,
                 "side": "credit",
-                "post_reference": 10000012
+                "post_reference": 10000500
             }],
         "approved_status": ""
     },
@@ -765,14 +782,14 @@ big_data_list = \
                 "account_name": "Salaries Expense",
                 "balance": 400,
                 "side": "debit",
-                "post_reference": 10000017
+                "post_reference": 10000604
             },
             {
                 "date": "2025-04-15",
                 "account_name": "Cash",
                 "balance": 400,
                 "side": "credit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             }],
         "approved_status": ""
     },
@@ -785,14 +802,14 @@ big_data_list = \
                 "account_name": "Cash",
                 "balance": 3175,
                 "side": "debit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             },
             {
                 "date": "2025-04-15",
                 "account_name": "Service Revenue",
                 "balance": 3175,
                 "side": "credit",
-                "post_reference": 10000012
+                "post_reference": 10000500
             }],
         "approved_status": ""
     },
@@ -805,14 +822,14 @@ big_data_list = \
                 "account_name": "Supplies",
                 "balance": 750,
                 "side": "debit",
-                "post_reference": 10000005
+                "post_reference": 10000104
             },
             {
                 "date": "2025-04-18",
                 "account_name": "Cash",
                 "balance": 750,
                 "side": "credit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             }],
         "approved_status": ""
     },
@@ -825,14 +842,14 @@ big_data_list = \
                 "account_name": "Accounts Receivable",
                 "balance": 1100,
                 "side": "debit",
-                "post_reference": 10000001
+                "post_reference": 10000101
             },
             {
                 "date": "2025-04-22",
                 "account_name": "Service Revenue",
                 "balance": 1100,
                 "side": "credit",
-                "post_reference": 10000012
+                "post_reference": 10000500
             }],
         "approved_status": ""
     },
@@ -845,14 +862,14 @@ big_data_list = \
                 "account_name": "Cash",
                 "balance": 1850,
                 "side": "debit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             },
             {
                 "date": "2025-04-22",
                 "account_name": "Service Revenue",
                 "balance": 1850,
                 "side": "credit",
-                "post_reference": 10000012
+                "post_reference": 10000500
             }],
         "approved_status": ""
     },
@@ -865,14 +882,14 @@ big_data_list = \
                 "account_name": "Cash",
                 "balance": 1600,
                 "side": "debit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             },
             {
                 "date": "2025-04-22",
                 "account_name": "Accounts Receivable",
                 "balance": 1600,
                 "side": "credit",
-                "post_reference": 10000001
+                "post_reference": 10000101
             }],
         "approved_status": ""
     },
@@ -885,14 +902,14 @@ big_data_list = \
                 "account_name": "Salaries Expense",
                 "balance": 400,
                 "side": "debit",
-                "post_reference": 10000017
+                "post_reference": 10000604
             },
             {
                 "date": "2025-04-27",
                 "account_name": "Cash",
                 "balance": 400,
                 "side": "credit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             }],
         "approved_status": ""
     },
@@ -905,14 +922,14 @@ big_data_list = \
                 "account_name": "Telephone Expense",
                 "balance": 130,
                 "side": "debit",
-                "post_reference": 10000018
+                "post_reference": 10000605
             },
             {
                 "date": "2025-04-28",
                 "account_name": "Cash",
                 "balance": 130,
                 "side": "credit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             }],
         "approved_status": ""
     },
@@ -925,14 +942,14 @@ big_data_list = \
                 "account_name": "Utilities Expense",
                 "balance": 200,
                 "side": "debit",
-                "post_reference": 10000019
+                "post_reference": 10000606
             },
             {
                 "date": "2025-04-29",
                 "account_name": "Cash",
                 "balance": 200,
                 "side": "credit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             }],
         "approved_status": ""
     },
@@ -945,14 +962,14 @@ big_data_list = \
                 "account_name": "Cash",
                 "balance": 2050,
                 "side": "debit",
-                "post_reference": 10000000
+                "post_reference": 10000100
             },
             {
                 "date": "2025-04-29",
                 "account_name": "Service Revenue",
                 "balance": 2050,
                 "side": "credit",
-                "post_reference": 10000012
+                "post_reference": 10000500
             }],
         "approved_status": ""
     },
@@ -965,14 +982,14 @@ big_data_list = \
                 "account_name": "Accounts Receivable",
                 "balance": 1000,
                 "side": "debit",
-                "post_reference": 10000001
+                "post_reference": 10000101
             },
             {
                 "date": "2025-04-29",
                 "account_name": "Service Revenue",
                 "balance": 1000,
                 "side": "credit",
-                "post_reference": 10000012
+                "post_reference": 10000500
             }],
         "approved_status": ""
     },
@@ -985,22 +1002,149 @@ big_data_list = \
                 "account_name": "Salaries Expense",
                 "balance": 4500,
                 "side": "debit",
-                "post_reference": 10000017
+                "post_reference": 10000604
             },
             {
                 "date": "2025-04-29",
                 "account_name": "Cash",
                 "balance": 4500,
                 "side": "credit",
-                "post_reference": 10000000
+                "post_reference": 10000100
+            }],
+        "approved_status": ""
+    },
+    #adjusting journal entries
+    {
+        "journal_id": "",
+        "date": "",
+        "journal_type" : "adjusting",
+        "transactions": [
+            {
+                "date": "2025-04-30",
+                "account_name": "Insurance Expense",
+                "balance": 150,
+                "side": "debit",
+                "post_reference": 10000600
+            },
+            {
+                "date": "2025-04-30",
+                "account_name": "Prepaid Insurance",
+                "balance": 150,
+                "side": "credit",
+                "post_reference": 10000103
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "journal_type" : "adjusting",
+        "transactions": [
+            {
+                "date": "2025-04-30",
+                "account_name": "Supplies Expense",
+                "balance": 980,
+                "side": "debit",
+                "post_reference": 10000603
+            },
+            {
+                "date": "2025-04-30",
+                "account_name": "Supplies",
+                "balance": 980,
+                "side": "credit",
+                "post_reference": 10000104
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "journal_type": "adjusting",
+        "transactions": [
+            {
+                "date": "2025-04-30",
+                "account_name": "Depreciation Expense",
+                "balance": 500,
+                "side": "debit",
+                "post_reference": 10000601
+            },
+            {
+                "date": "2025-04-30",
+                "account_name": "Accumulated Depreciation",
+                "balance": 500,
+                "side": "credit",
+                "post_reference": 10000201
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "journal_type": "adjusting",
+        "transactions": [
+            {
+                "date": "2025-04-30",
+                "account_name": "Salaries Expense",
+                "balance": 500,
+                "side": "debit",
+                "post_reference": 10000604
+            },
+            {
+                "date": "2025-04-30",
+                "account_name": "Salaries Payable",
+                "balance": 500,
+                "side": "credit",
+                "post_reference": 10000301
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "journal_type": "adjusting",
+        "transactions": [
+            {
+                "date": "2025-04-30",
+                "account_name": "Rent Expense",
+                "balance": 1500,
+                "side": "debit",
+                "post_reference": 10000602
+            },
+            {
+                "date": "2025-04-30",
+                "account_name": "Prepaid Rent",
+                "balance": 1500,
+                "side": "credit",
+                "post_reference": 10000102
+            }],
+        "approved_status": ""
+    },
+    {
+        "journal_id": "",
+        "date": "",
+        "journal_type": "adjusting",
+        "transactions": [
+            {
+                "date": "2025-04-30",
+                "account_name": "Unearned Revenue",
+                "balance": 500,
+                "side": "debit",
+                "post_reference": 10000302
+            },
+            {
+                "date": "2025-04-30",
+                "account_name": "Service Revenue",
+                "balance": 500,
+                "side": "credit",
+                "post_reference": 10000500
             }],
         "approved_status": ""
     },
 ]
 
-asyncio.run(approve_all_journals())
 
-#asyncio.run(insert_multiple_data(big_data_list))
+asyncio.run(insert_multiple_data(big_data_list))
+asyncio.run(approve_all_journals())
 
 # async def main_function():
 #     task = main.get_accounts()

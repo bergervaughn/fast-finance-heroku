@@ -18,6 +18,10 @@ class ApprovedStatus(str, Enum):
     pending = "pending"
     rejected = "rejected"
 
+class JournalType(str, Enum):
+    normal = "normal"
+    adjusting = "adjusting"
+
 class Account(BaseModel):
     account_id: int
     account_name : str
@@ -45,6 +49,7 @@ class Transaction(BaseModel):
 class JournalEntry(BaseModel):
     journal_id : str= "" # assigned in post function
     date : str = "" # assigned dynamically from transactions
+    journal_type : JournalType = "normal"
     transactions : List = []
     approved_status : ApprovedStatus = "pending"
     comment : str = ""
