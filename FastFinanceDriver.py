@@ -318,8 +318,8 @@ big_data_list = \
 	    "order": 106,
         "description": "",
         "normal_side": "debit",
-        "category": "Property Plant & Equipment",
-        "sub_category": "N/A",
+        "category": "asset",
+        "sub_category": "Property Plant & Equipment",
         "initial_balance": 0,
         "debit": 0,
         "credit": 0,
@@ -334,8 +334,8 @@ big_data_list = \
 	    "order": 106,
         "description": "",
         "normal_side": "credit",
-        "category": "Property Plant & Equipment",
-        "sub_category": "N/A",
+        "category": "asset",
+        "sub_category": "contra-asset",
         "initial_balance": 0,
         "debit": 0,
         "credit": 0,
@@ -400,7 +400,7 @@ big_data_list = \
         "order": 110,
         "description": "",
         "normal_side": "credit",
-        "category": "Stockholder's Equity",
+        "category": "Equity",
         "sub_category": "N/A",
         "initial_balance": 0,
         "debit": 0,
@@ -416,7 +416,7 @@ big_data_list = \
         "order": 111,
         "description": "",
         "normal_side": "credit",
-        "category": "Stockholder's Equity",
+        "category": "Equity",
         "sub_category": "N/A",
         "initial_balance": 0,
         "debit": 0,
@@ -623,14 +623,14 @@ big_data_list = \
             {
                 "date": "2025-04-04",
                 "account_name": "Prepaid Rent",
-                "balance": 7500,
+                "balance": 4500,
                 "side": "debit",
                 "post_reference": 10000102
             },
             {
                 "date": "2025-04-04",
                 "account_name": "Cash",
-                "balance": 7500,
+                "balance": 4500,
                 "side": "credit",
                 "post_reference": 10000100
             }],
@@ -1107,14 +1107,14 @@ big_data_list = \
             {
                 "date": "2025-04-30",
                 "account_name": "Salaries Expense",
-                "balance": 500,
+                "balance": 20,
                 "side": "debit",
                 "post_reference": 10000604
             },
             {
                 "date": "2025-04-30",
                 "account_name": "Salaries Payable",
-                "balance": 500,
+                "balance": 20,
                 "side": "credit",
                 "post_reference": 10000301
             }],
@@ -1149,14 +1149,14 @@ big_data_list = \
             {
                 "date": "2025-04-30",
                 "account_name": "Unearned Revenue",
-                "balance": 500,
+                "balance": 2000,
                 "side": "debit",
                 "post_reference": 10000302
             },
             {
                 "date": "2025-04-30",
                 "account_name": "Service Revenue",
-                "balance": 500,
+                "balance": 2000,
                 "side": "credit",
                 "post_reference": 10000500
             }],
