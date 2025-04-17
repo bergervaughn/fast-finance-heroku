@@ -363,7 +363,6 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
         entry = entry.model_dump()
 
 
-
     transactions = entry['transactions']
     if transactions is None or len(transactions) == 0:
         return {"Error": "No transactions in journal entry"}
@@ -387,6 +386,9 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
 
     date = entry['transactions'][0]['date']
     entry['date'] = date
+
+    if "description" not in entry:
+        entry["description"] = ""
 
     entry['comment'] = ""
 

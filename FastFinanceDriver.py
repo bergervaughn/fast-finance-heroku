@@ -577,6 +577,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-04",
@@ -619,6 +620,7 @@ big_data_list = \
         "journal_id" : "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-04",
@@ -640,6 +642,7 @@ big_data_list = \
         "journal_id" : "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-04",
@@ -661,6 +664,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-06",
@@ -682,6 +686,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-07",
@@ -703,6 +708,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-08",
@@ -724,6 +730,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-11",
@@ -745,6 +752,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-12",
@@ -766,6 +774,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-15",
@@ -787,6 +796,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-15",
@@ -808,6 +818,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-15",
@@ -829,6 +840,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-18",
@@ -850,6 +862,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-22",
@@ -871,6 +884,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-22",
@@ -892,6 +906,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-22",
@@ -913,6 +928,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-27",
@@ -934,6 +950,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-28",
@@ -955,6 +972,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-29",
@@ -976,6 +994,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-29",
@@ -997,6 +1016,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-29",
@@ -1018,6 +1038,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "normal",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-29",
@@ -1040,6 +1061,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type" : "adjusting",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-30",
@@ -1061,6 +1083,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type" : "adjusting",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-30",
@@ -1082,6 +1105,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "adjusting",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-30",
@@ -1103,6 +1127,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "adjusting",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-30",
@@ -1124,6 +1149,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "adjusting",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-30",
@@ -1145,6 +1171,7 @@ big_data_list = \
         "journal_id": "",
         "date": "",
         "journal_type": "adjusting",
+        "description": "",
         "transactions": [
             {
                 "date": "2025-04-30",
