@@ -21,6 +21,8 @@ class ApprovedStatus(str, Enum):
 class JournalType(str, Enum):
     normal = "normal"
     adjusting = "adjusting"
+    closing = "closing"
+    reversing = "reversing"
 
 class Account(BaseModel):
     account_id: int
