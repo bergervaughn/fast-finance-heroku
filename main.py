@@ -1,5 +1,6 @@
+import base64
 from bson import ObjectId
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile, Response
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import FFEmail
@@ -499,10 +500,21 @@ def fetch_ledger_transactions(account_id: int = 0):
 
     return trans_list
 
-# @app.get("/journal/adjusting")
-# async def get_adjusting_journal_entries(status: ApprovedStatus = None):
-#     return fetch_journal(status, JournalType.adjusting)
-#
-# @app.get('/journal/adjusting/get_one')
-# async def get_one_adjusting_journal_entry(journal_id: str):
-#     return DBA.get_one('Journal', {'journal_id': journal_id})
+@app.post("/upload_file")
+async def upload_file(user_id: str, file: UploadFile = File(...) ):
+    file_bytes = await file.read()
+    encoded = base64.b64encode(file_bytes).decode('utf-8')
+    file_upload = {
+        "file_id": str(ObjectId()),
+        "file_name": file.filename,
+        "content_type": file.content_type,
+        "file_data": encoded
+    }
+    DBA.insert('Uploads', file_upload, user_id)
+
+@app.get("/download_file")
+async def download_file(file_id: str):
+    file_download = DBA.get_one('Uploads', {"file_id": file_id})
+    decoded = base64.b64decode(file_download['file_data'])
+    return Response(content=decoded, media_type=file_download['content_type'],
+                    headers={"Content-Disposition": f"attachment; filename={file_download['file_name']}"})

@@ -57,3 +57,8 @@ class JournalEntry(BaseModel):
     description: str = ""
     comment : str = ""
 
+class FileUpload(BaseModel):
+    file_id: str
+    file_name: str
+    content_type: str
+    file_data: str
