@@ -54,6 +54,7 @@ class JournalEntry(BaseModel):
     journal_type : JournalType = JournalType.normal
     transactions : List = []
     approved_status : ApprovedStatus = "pending"
+    file_list: List = []
     description: str = ""
     comment : str = ""
 

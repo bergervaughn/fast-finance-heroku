@@ -388,6 +388,9 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     date = entry['transactions'][0]['date']
     entry['date'] = date
 
+    if "file_list" not in entry:
+        entry["file_list"] = []
+
     if "description" not in entry:
         entry["description"] = ""
 
