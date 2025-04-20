@@ -509,13 +509,16 @@ def fetch_ledger_transactions(account_id: int = 0):
 async def upload_file(user_id: str, file: UploadFile = File(...) ):
     file_bytes = await file.read()
     encoded = base64.b64encode(file_bytes).decode('utf-8')
+    file_id = str(ObjectId())
     file_upload = {
-        "file_id": str(ObjectId()),
+        "file_id": file_id,
         "file_name": file.filename,
         "content_type": file.content_type,
         "file_data": encoded
     }
-    return DBA.insert_no_log('Uploads', file_upload)
+    DBA.insert_no_log('Uploads', file_upload)
+
+    return {"file_id": file_id}
 
 @app.get("/download_file")
 async def download_file(file_id: str):
