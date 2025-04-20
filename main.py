@@ -506,7 +506,7 @@ def fetch_ledger_transactions(account_id: int = 0):
     return trans_list
 
 @app.post("/upload_file")
-async def upload_file(user_id: str, file: UploadFile = File(...) ):
+async def upload_file(file: UploadFile = File(...)):
     file_bytes = await file.read()
     encoded = base64.b64encode(file_bytes).decode('utf-8')
     file_id = str(ObjectId())
