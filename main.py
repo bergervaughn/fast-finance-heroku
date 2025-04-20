@@ -4,6 +4,7 @@ from fastapi import FastAPI, File, UploadFile, Response
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from unicodedata import category
+from urllib.parse import quote
 
 import FFEmail
 
@@ -520,12 +521,20 @@ async def upload_file(file: UploadFile = File(...)):
 
     return {"file_id": file_id}
 
+
 @app.get("/download_file")
 async def download_file(file_id: str):
     file_download = DBA.get_one('Uploads', {"file_id": file_id})
     decoded = base64.b64decode(file_download['file_data'])
-    return Response(content=decoded, media_type=file_download['content_type'],
-                    headers={"Content-Disposition": f"attachment; filename={file_download['file_name']}"})
+
+    filename = file_download['file_name']
+    quoted_filename = quote(filename)
+
+    headers = {
+        "Content-Disposition": f"attachment; filename*=UTF-8''{quoted_filename}"
+    }
+
+    return Response(content=decoded, media_type=file_download['content_type'], headers=headers)
 
 @app.get("/ratios")
 async def get_ratios():
