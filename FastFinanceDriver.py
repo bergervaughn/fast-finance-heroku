@@ -286,7 +286,7 @@ big_data_list = \
         "description": "",
         "normal_side": "debit",
         "category": "Assets",
-        "sub_category": "Current Assents",
+        "sub_category": "Current Assets",
         "initial_balance": 0,
         "debit": 0,
         "credit": 0,
@@ -1191,11 +1191,11 @@ big_data_list = \
     },
 ]
 
-delete_entire_database()
+#delete_entire_database()
+#asyncio.run(insert_multiple_data(big_data_list))
+#asyncio.run(approve_all_journals())
 
-asyncio.run(insert_multiple_data(big_data_list))
-asyncio.run(approve_all_journals())
-
+asyncio.run(main.get_ratios())
 # async def main_function():
 #     task = main.get_accounts()
 #     print(await task)

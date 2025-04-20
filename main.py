@@ -3,6 +3,8 @@ from bson import ObjectId
 from fastapi import FastAPI, File, UploadFile, Response
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from unicodedata import category
+
 import FFEmail
 
 from userinfo import User, Role, NewUserRequest, Email
@@ -513,7 +515,7 @@ async def upload_file(user_id: str, file: UploadFile = File(...) ):
         "content_type": file.content_type,
         "file_data": encoded
     }
-    DBA.insert('Uploads', file_upload, user_id)
+    return DBA.insert_no_log('Uploads', file_upload)
 
 @app.get("/download_file")
 async def download_file(file_id: str):
@@ -521,3 +523,106 @@ async def download_file(file_id: str):
     decoded = base64.b64decode(file_download['file_data'])
     return Response(content=decoded, media_type=file_download['content_type'],
                     headers={"Content-Disposition": f"attachment; filename={file_download['file_name']}"})
+
+@app.get("/ratios")
+async def get_ratios():
+    accounts = await get_accounts()
+    current_assets = 0
+    current_liabilities = 0
+    total_assets = 0
+    sales_revenue = 0
+    total_expenses = 0
+    net_income = 0 # revenue - total expenses
+    total_equity = 0
+    inventory = 0
+
+    for account in accounts:
+        category = account['category']
+        sub_category = account['sub_category']
+        balance = abs(account['balance'])
+
+        if category == "Assets":
+            total_assets += balance
+        elif category == "Expenses":
+            total_expenses += balance
+        elif category == "Stakeholder's Equity":
+            total_equity += balance
+        elif category == "Revenues":
+            sales_revenue += balance
+
+        if sub_category == "Current Assets":
+            current_assets += balance
+        elif sub_category == "Current Liabilities":
+            current_liabilities += balance
+        elif sub_category == "Inventory":
+            inventory += balance
+
+    # print(f"Current Assets: {current_assets}")
+    # print(f"Current Liabilities: {current_liabilities}")
+    # print(f"Current Ratio: {current_ratio}")
+
+    net_income = sales_revenue - total_expenses
+    current_ratio = current_assets/current_liabilities
+    return_on_assets = net_income/total_assets
+    return_on_equity = net_income/total_equity
+    net_profit_margin = net_income/sales_revenue
+    asset_turnover = sales_revenue/total_assets
+    quick_ratio = (current_assets-inventory)/current_liabilities
+
+    ratios = [["Current Ratio", current_ratio],
+              ["Return on Assets", return_on_assets],
+              ["Return on Equity", return_on_equity],
+              ["Net Profit Margin", net_profit_margin],
+              ["Asset Turnover", asset_turnover],
+              ["Quick Ratio", quick_ratio]]
+
+    if current_ratio >= 2.0:
+        ratios[0].append("green")
+    elif current_ratio >= 1.0:
+        ratios[0].append("yellow")
+    else:
+        ratios[0].append("red")
+    ratios[0][1] = f"{current_ratio:.2%}"
+
+    if return_on_assets >= 0.2:
+        ratios[1].append("green")
+    elif return_on_assets >= 0.05:
+        ratios[1].append("yellow")
+    else:
+        ratios[1].append("red")
+    ratios[1][1] = f"{return_on_assets:.2%}"
+
+    if return_on_equity >= 0.2:
+        ratios[2].append("green")
+    elif return_on_equity >= 0.05:
+        ratios[2].append("yellow")
+    else:
+        ratios[2].append("red")
+    ratios[2][1] = f"{return_on_equity:.2%}"
+
+    if net_profit_margin >= 0.2:
+        ratios[3].append("green")
+    elif net_profit_margin >= 0.1:
+        ratios[3].append("yellow")
+    else:
+        ratios[3].append("red")
+    ratios[3][1] = f"{net_profit_margin:.2%}"
+
+    if asset_turnover >= 0.25:
+        ratios[4].append("green")
+    elif asset_turnover >= 0.0:
+        ratios[4].append("yellow")
+    else:
+        ratios[4].append("red")
+    ratios[4][1] = f"{asset_turnover:.2%}"
+
+    if quick_ratio >= 1.0:
+        ratios[5].append("green")
+    elif quick_ratio >= 0.0:
+        ratios[5].append("yellow")
+    else:
+        ratios[5].append("red")
+    ratios[5][1] = f"{quick_ratio:.2%}"
+
+    print(ratios)
+    return ratios

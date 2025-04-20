@@ -99,6 +99,11 @@ def insert(collection, document, user_id):
     event(None, document, user_id)
     return {"message" : "Document successfully inserted"}
 
+def insert_no_log(collection, document):
+    collection = db[collection]
+    collection.insert_one(document)
+    return {"message": "Document successfully inserted"}
+
 def delete(collection, query, user_id):
     deleted = get_one(collection, query)
     collection = db[collection]
