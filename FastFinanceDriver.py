@@ -1191,11 +1191,11 @@ big_data_list = \
     },
 ]
 
-#delete_entire_database()
-#asyncio.run(insert_multiple_data(big_data_list))
-#asyncio.run(approve_all_journals())
+delete_entire_database()
+asyncio.run(insert_multiple_data(big_data_list))
+asyncio.run(approve_all_journals())
 
-asyncio.run(main.get_ratios())
+#asyncio.run(main.get_ratios())
 # async def main_function():
 #     task = main.get_accounts()
 #     print(await task)

@@ -405,9 +405,12 @@ async def post_journal_entry(entry : JournalEntry, user_id : str):
     identifier = ObjectId().binary[4:].hex()
     # returns the hexadecimal string of the last 8 bytes of object id, which are the random value and the counter. This is because
     # the id I am constructing for journals will already include the date, and this is to ensure that two journal ids cannot be identical
-
-    entry['journal_id'] = date + transaction1 + transaction2 + identifier
+    journal_id = date + transaction1 + transaction2 + identifier
+    entry['journal_id'] = journal_id
     # each journal ID will be the date, followed by the names of the first 2 accounts affected, followed by a random identifier.
+
+    for transaction in transactions:
+        transaction['journal_id'] = journal_id
 
     message = DBA.insert('Journal', entry, user_id)
     return message
