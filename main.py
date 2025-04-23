@@ -189,7 +189,7 @@ async def new_user(user: NewUserRequest):
 @app.post("/email")
 async def send_email(email: Email):
     result = FFEmail.send_email(email.recipient, email.subject, email.body)
-    return {"Message": result}
+    return result
 
 @app.put("/users/update")
 async def update_user(user: User, user_id: str):

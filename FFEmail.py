@@ -57,11 +57,7 @@ def send_email(recipient, subject, message):
     msg.set_content(message)
 
     with smtplib.SMTP(HOST, PORT) as smtp:
-        try:
-            smtp.starttls()
-            smtp.login(from_email, PASSWORD)
-            smtp.sendmail(from_email, recipient, msg.as_string())
-        except smtplib.SMTPException as e:
-            return f"Email failed to send: {e}"
 
-    return "Email sent successfully!"
+        smtp.starttls()
+        smtp.login(from_email, PASSWORD)
+        return smtp.sendmail(from_email, recipient, msg.as_string())
