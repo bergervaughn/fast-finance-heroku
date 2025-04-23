@@ -639,5 +639,5 @@ async def get_ratios():
         ratios[5].append("red")
     ratios[5][1] = f"{quick_ratio:.2%}"
 
-    print(ratios)
+    #print(ratios)
     return ratios
