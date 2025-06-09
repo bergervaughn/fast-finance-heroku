@@ -555,26 +555,35 @@ async def get_ratios():
         category = account['category']
         sub_category = account['sub_category']
         balance = abs(account['balance'])
+        # print(f"Current Account: {account['account_name']}")
+        # print(f"Category: {category}")
+        # print(f"Sub-Category: {sub_category}")
+        # print(f"Balance: {balance}")
 
         if category == "Assets":
             total_assets += balance
+           # print(f"{account['account_name']} added to Total Assets")
         elif category == "Expenses":
             total_expenses += balance
+            #print(f"{account['account_name']} added to Total Expenses")
         elif category == "Stakeholder's Equity":
             total_equity += balance
+            #print(f"{account['account_name']} added to Stakeholder Equity")
         elif category == "Revenues":
+           # print(f"{account['account_name']} added to Revenues")
             sales_revenue += balance
 
         if sub_category == "Current Assets":
             current_assets += balance
+            #print(f"{account['account_name']} added to Current Assets")
         elif sub_category == "Current Liabilities":
             current_liabilities += balance
+            #print(f"{account['account_name']} added to Current Liabilities")
         elif sub_category == "Inventory":
+            #print(f"{account['account_name']} added to Inventory")
             inventory += balance
 
-    # print(f"Current Assets: {current_assets}")
-    # print(f"Current Liabilities: {current_liabilities}")
-    # print(f"Current Ratio: {current_ratio}")
+
 
     net_income = sales_revenue - total_expenses
     current_ratio = current_assets/current_liabilities
@@ -583,6 +592,10 @@ async def get_ratios():
     net_profit_margin = net_income/sales_revenue
     asset_turnover = sales_revenue/total_assets
     quick_ratio = (current_assets-inventory)/current_liabilities
+
+    print(f"Current Assets: {current_assets}")
+    print(f"Current Liabilities: {current_liabilities}")
+    print(f"Current Ratio: {current_ratio}")
 
     ratios = [["Current Ratio", current_ratio],
               ["Return on Assets", return_on_assets],
@@ -641,3 +654,4 @@ async def get_ratios():
 
     #print(ratios)
     return ratios
+
