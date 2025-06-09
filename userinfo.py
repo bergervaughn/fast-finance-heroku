@@ -18,7 +18,7 @@ class User(BaseModel):
     user_id: str
     hashed_pass: str
     past_passwords: List[str] = []
-    email: str = "bergervaughn@gmail.com" # default is my email
+    email: str
     role: Role
     status: bool = True
     first_name: str
@@ -26,16 +26,19 @@ class User(BaseModel):
     profile_picture : int = 0
     dob: str = "1900-01-01"
     failed_attempts: int = 0
-    password_expiration: str = "2025-01-05"
+    password_expiration: str = ""
     security_answers: List[str] = []
     suspension_start : str = ""
     suspension_end : str = ""
 
 class NewUserRequest(BaseModel):
+    email: str
     first_name: str
     last_name: str
-    email: str
     dob: str
+    hashed_pass: str
+    role : Role
+    security_answers: List[str]
 
 class Email(BaseModel):
     recipient: str
